@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John Belen — The Belens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f1e2e;
+    --navy-mid: #1a3048;
+    --amber: #c8872a;
+    --amber-light: #e8a84a;
+    --cream: #f5f0e8;
+    --cream-mid: #ede5d6;
+    --text-dark: #0f1e2e;
+    --text-muted: #5a6a7a;
+    --white: #ffffff;
+    --radius: 4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(15, 30, 46, 0.96);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+    border-bottom: 1px solid rgba(200, 135, 42, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--amber); }
+
+  nav ul {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  nav a {
+    color: rgba(245, 240, 232, 0.75);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--amber-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 8rem 2.5rem 5rem;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 55%;
+    height: 120%;
+    background: radial-gradient(ellipse at center, rgba(200,135,42,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '"Just an old\00a0Parts Guy."';
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(4rem, 8vw, 9rem);
+    color: rgba(200,135,42,0.07);
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--amber);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--amber-light);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: rgba(245,240,232,0.65);
+    max-width: 560px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 3rem;
+  }
+
+  .badge {
+    background: rgba(200,135,42,0.12);
+    border: 1px solid rgba(200,135,42,0.3);
+    color: var(--amber-light);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    padding: 6px 16px;
+    border-radius: 100px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--amber);
+    color: var(--navy);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    padding: 14px 32px;
+    border-radius: var(--radius);
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .hero-cta:hover { background: var(--amber-light); transform: translateY(-1px); }
+
+  .hero-cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(245,240,232,0.25);
+    color: rgba(245,240,232,0.75);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    padding: 14px 32px;
+    border-radius: var(--radius);
+    margin-left: 1rem;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+
+  .hero-cta-ghost:hover { border-color: var(--amber); color: var(--amber-light); transform: translateY(-1px); }
+
+  /* STAT BAR */
+  .stat-bar {
+    background: var(--navy-mid);
+    border-top: 1px solid rgba(200,135,42,0.15);
+    border-bottom: 1px solid rgba(200,135,42,0.15);
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    flex-wrap: wrap;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-number {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: rgba(245,240,232,0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 2.5rem; }
+
+  .section-inner { max-width: 900px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--amber);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ABOUT */
+  #about { background: var(--cream); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    font-size: 1.05rem;
+    line-height: 1.85;
+  }
+
+  .about-text p strong {
+    color: var(--text-dark);
+    font-weight: 500;
+  }
+
+  .award-card {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 2rem;
+    color: var(--cream);
+    border-left: 3px solid var(--amber);
+    margin-top: 2rem;
+  }
+
+  .award-card .award-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    color: var(--amber-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .award-card p { color: rgba(245,240,232,0.65); font-size: 0.92rem; line-height: 1.7; }
+
+  .skills-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .skills-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  .skills-list li::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+    flex-shrink: 0;
+  }
+
+  /* CAREER */
+  #career { background: var(--cream-mid); }
+
+  .timeline { position: relative; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--amber), transparent);
+  }
+
+  .timeline-item {
+    padding-left: 2.5rem;
+    padding-bottom: 3rem;
+    position: relative;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 8px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 2px solid var(--cream-mid);
+  }
+
+  .timeline-date {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-role {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-company {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 600px;
+  }
+
+  /* PHILOSOPHY */
+  #philosophy { background: var(--navy); }
+  #philosophy h2 { color: var(--cream); }
+  #philosophy .section-label { }
+
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .philosophy-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(200,135,42,0.15);
+    border-radius: 8px;
+    padding: 2rem;
+    transition: border-color 0.2s;
+  }
+
+  .philosophy-card:hover { border-color: rgba(200,135,42,0.4); }
+
+  .philosophy-icon {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .philosophy-card h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+  }
+
+  .philosophy-card p {
+    font-size: 0.9rem;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.75;
+  }
+
+  /* CONTACT */
+  #contact { background: var(--cream); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-intro p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 1rem;
+  }
+
+  .contact-note {
+    background: var(--cream-mid);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-left: 3px solid var(--amber);
+    margin-top: 2rem;
+    font-style: italic;
+  }
+
+  /* FORM */
+  form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  input, textarea, select {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.95rem;
+    background: var(--white);
+    border: 1px solid rgba(15,30,46,0.15);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  input:focus, textarea:focus {
+    border-color: var(--amber);
+    box-shadow: 0 0 0 3px rgba(200,135,42,0.1);
+  }
+
+  textarea { resize: vertical; min-height: 130px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .submit-btn {
+    background: var(--navy);
+    color: var(--cream);
+    border: none;
+    border-radius: var(--radius);
+    padding: 14px 32px;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .submit-btn:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+  .success-msg {
+    display: none;
+    background: #eaf3de;
+    border: 1px solid #97c459;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    color: #3b6d11;
+    font-size: 0.95rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 2.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(200,135,42,0.15);
+  }
+
+  footer p {
+    font-size: 0.82rem;
+    color: rgba(245,240,232,0.35);
+    letter-spacing: 0.04em;
+  }
+
+  footer a { color: rgba(200,135,42,0.6); text-decoration: none; }
+  footer a:hover { color: var(--amber-light); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav ul { gap: 1.25rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .philosophy-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .stat-bar { gap: 2.5rem; }
+    .hero::after { display: none; }
+    .hero-cta-ghost { margin-left: 0; margin-top: 0.75rem; }
+  }
+
+  /* FADE-IN ANIMATION */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">The<span>Belens</span></a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#career">Career</a></li>
+    <li><a href="#family">Family</a></li>
+    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Cape Coral, Florida</div>
+    <h1>The guy who makes<br><em>dealerships actually work.</em></h1>
+    <p class="hero-sub">
+      Director of Fixed Operations Applications. CDK Jedi Master. Michigan Quality Hero.
+      Passionate teacher. Fierce advocate of outrageous customer service.
+      And yes — self-described "Just an old Parts Guy."
+    </p>
+    <div class="hero-badges">
+      <span class="badge">148 Dealerships</span>
+      <span class="badge">CDK / DMS Expert</span>
+      <span class="badge">Michigan Quality Hero</span>
+      <span class="badge">Toastmaster</span>
+      <span class="badge">Apple Loyalist</span>
+    </div>
+    <div>
+      <a href="#about" class="hero-cta">Learn More</a>
+      <a href="#contact" class="hero-cta-ghost">Say Hello</a>
+    </div>
+  </div>
+</section>
+
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="stat">
+    <span class="stat-number">25+</span>
+    <span class="stat-label">Years in Automotive</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">148</span>
+    <span class="stat-label">Dealerships Managed</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">11</span>
+    <span class="stat-label">Years at Asbury</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">1</span>
+    <span class="stat-label">Michigan Quality Hero</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <div class="section-label">About</div>
+        <h2>The story behind the title.</h2>
+        <p>
+          There's a reason John Belen calls himself "just an old Parts Guy" — it's not false modesty,
+          it's a badge of honor. A career that started on the parts counter became a masterclass in
+          <strong>how dealerships actually run</strong>, and why the people in the back of the house
+          are just as important as the ones closing deals out front.
+        </p>
+        <p>
+          Today John oversees Fixed Operations applications for <strong>148 automobile dealerships</strong>
+          across the country at Asbury Automotive Group — one of the largest automotive retail groups in
+          the US. His specialty? Taking the complexity of Dealer Management Systems and turning it into
+          something the people who actually use it can understand, love, and profit from.
+        </p>
+        <p>
+          He's an experienced Toastmaster, an accomplished public speaker, an Apple fanatic since
+          before it was fashionable, and the kind of teacher who stays after class because he genuinely
+          wants to see you succeed.
+        </p>
+        <div class="award-card">
+          <div class="award-title">Michigan Quality Hero — Michigan Quality Council</div>
+          <p>Awarded for doing what he felt was simply "right" for customers and his business.
+          Which pretty much sums up the whole philosophy.</p>
+        </div>
+      </div>
+      <div class="fade-in" style="animation-delay: 0.15s">
+        <div class="section-label">Specialties</div>
+        <h2 style="font-size: 1.5rem; margin-bottom: 1.75rem;">What John does better than almost anyone.</h2>
+        <ul class="skills-list">
+          <li>CDK / DMS Fixed Operations configuration and optimization</li>
+          <li>Empathic listening — actually hearing what clients need</li>
+          <li>Cross-platform dealership standards and data management</li>
+          <li>Parts & Service department process design</li>
+          <li>Staff training that sticks — because he loves to teach</li>
+          <li>Creative problem solving that reaches the goal</li>
+          <li>Public speaking and executive-level presentation</li>
+          <li>Building trust with clients through honesty and integrity</li>
+          <li>Representing only products he genuinely believes in</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile" style="background: var(--cream-mid);">
+  <div class="section-inner">
+    <div class="section-label">The Science Behind the Guy</div>
+    <h2>What the assessments<br>actually confirmed.</h2>
+    <p style="color: var(--text-muted); max-width: 620px; margin-bottom: 3.5rem; font-size: 1rem; line-height: 1.85;">
+      After 25+ years in the field, two formal behavioral assessments — Caliper and Birkman —
+      put numbers to what colleagues had already figured out the hard way.
+      Turns out, the data agrees with the anecdotes.
+    </p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+
+      <div class="fade-in" style="background: var(--navy); border-radius: 8px; padding: 2.25rem; border-top: 3px solid var(--amber);">
+        <div style="font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">Caliper Profile · 2019</div>
+        <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.3rem; color: var(--cream); margin-bottom: 1.25rem;">The Analytical Engine</h3>
+        <p style="color: rgba(245,240,232,0.6); font-size: 0.93rem; line-height: 1.8;">
+          <strong style="color: var(--amber-light); font-weight: 500;">Analytical Thinking</strong> scored in the Natural tier —
+          meaning it isn't something John works at. It's simply how his brain processes the world.
+          Service Focus and Continuous Learning follow close behind, reflecting the genuine drive to
+          help others and the appetite for learning that never really switches off.
+        </p>
+      </div>
+
+      <div class="fade-in" style="background: var(--navy); border-radius: 8px; padding: 2.25rem; border-top: 3px solid var(--amber);">
+        <div style="font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">Birkman Method</div>
+        <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.3rem; color: var(--cream); margin-bottom: 1.25rem;">The Behavioral Ambidextrous</h3>
+        <p style="color: rgba(245,240,232,0.6); font-size: 0.93rem; line-height: 1.8;">
+          The Birkman map placed John's Usual Behavior near the center of all four quadrants —
+          the behavioral equivalent of a Swiss Army knife that actually works. It explains why he
+          adapts so naturally to wildly different personalities, from the shop floor to the
+          boardroom, without breaking stride.
+        </p>
+      </div>
+
+    </div>
+    <div class="fade-in" style="margin-top: 1.5rem; background: rgba(200,135,42,0.08); border: 1px solid rgba(200,135,42,0.2); border-radius: 8px; padding: 1.5rem 2rem; display: flex; align-items: flex-start; gap: 1.25rem;">
+      <div style="color: var(--amber); font-size: 1.5rem; flex-shrink: 0; margin-top: 2px;">◈</div>
+      <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; margin: 0;">
+        <strong style="color: var(--text-dark); font-weight: 500;">The rarest combination in the room:</strong>
+        A systems thinker with a servant's heart who reads people as easily as he reads data —
+        and genuinely can't decide which one he enjoys more.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CAREER -->
+<section id="career">
+  <div class="section-inner">
+    <div class="section-label">Career</div>
+    <h2>The road that got here.</h2>
+    <p style="color: var(--text-muted); max-width: 600px; margin-bottom: 3.5rem; font-size: 1rem;">
+      A career path that looks like a straight line — except it runs through parts counters, server rooms,
+      factory floors, trade show floors, and boardrooms. Not bad for an old Parts Guy.
+    </p>
+    <div class="timeline">
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">2021 – Present</div>
+        <div class="timeline-role">Director of Applications, Fixed Operations</div>
+        <div class="timeline-company">Asbury Automotive Group · United States</div>
+        <p class="timeline-desc">Leading a passionate crusade to clean data, unify processes across 90
+        stores, and make frontline people more productive — through transferring gifts and experience
+        to all staff. With a servant's heart, naturally.</p>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">2015 – 2021</div>
+        <div class="timeline-role">DMS Applications Manager</div>
+        <div class="timeline-company">Asbury Automotive Group · Hilton Head, SC</div>
+        <p class="timeline-desc">Managed setups and implementation for approximately 87 franchised auto
+        dealers, 23 Collision Centers, and 3 large Pre-Owned vehicle centers. Collaborating with vendors,
+        Directors, and Dealers to refine processes for better performance.</p>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">2013 – 2015</div>
+        <div class="timeline-role">Fixed Operations Launch Expert</div>
+        <div class="timeline-company">Volkswagen of America, Inc · Hilton Head, SC</div>
+        <p class="timeline-desc">Assisted new dealerships in understanding Volkswagen culture, policies,
+        and processes. Audited new facilities for brand compliance and helped them cross the finish line
+        before welcoming their first customer.</p>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">2011 – 2013</div>
+        <div class="timeline-role">Training & Implementation Consultant</div>
+        <div class="timeline-company">Dataset Inc. · Remote</div>
+        <p class="timeline-desc">Independent consultant specializing in ADP/CDK system customization
+        for automotive, heavy truck, and equipment dealers. His clients' favorite quote:
+        "ADP has now made me money."</p>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">2007 – 2010</div>
+        <div class="timeline-role">Territory Manager</div>
+        <div class="timeline-company">ADP Dealer Services · Southeastern USA</div>
+        <p class="timeline-desc">Consulted with Heavy Duty Truck dealers on data systems and productivity.
+        Delivered recommendations based on deep field experience — not a brochure.</p>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="timeline-date">1988 – 2007</div>
+        <div class="timeline-role">Multi-Role Automotive & Technology Leader</div>
+        <div class="timeline-company">Williams Autoworld · Michigan</div>
+        <p class="timeline-desc">Nearly two decades. One company. Every hat in the building. Over the
+        course of 19 years, John served as Technician, Service Manager, Parts Manager, Systems
+        Administrator, and IT Manager — administering a network across 5 buildings and 98 workstations
+        while keeping a 6-manufacturer parts operation in the top 10 in the country, year after year.
+        The origin story of the Parts Guy legend.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAMILY -->
+<section id="family" style="background: var(--navy);">
+  <div class="section-inner">
+    <div class="section-label">Family</div>
+    <h2 style="color: var(--cream);">The ones who make<br><em style="color: var(--amber-light);">all of it worth it.</em></h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 2.5rem; align-items: center;">
+      <div class="fade-in">
+        <p style="color: rgba(245,240,232,0.65); font-size: 1.05rem; line-height: 1.9; margin-bottom: 1.25rem;">
+          Before the dealerships, the awards, the titles, and the technology — there's a family
+          that has shown up every single time. John is a <strong style="color: var(--cream); font-weight: 500;">proud father of three</strong>
+          and a <strong style="color: var(--cream); font-weight: 500;">grandfather to five</strong>,
+          surrounded by an amazing and supportive family that has been the quiet engine behind
+          every career chapter.
+        </p>
+        <p style="color: rgba(245,240,232,0.65); font-size: 1.05rem; line-height: 1.9;">
+          The servant's heart didn't start at work. It started at home.
+        </p>
+      </div>
+      <div class="fade-in" style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; align-items: center;">
+        <div style="text-align: center;">
+          <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 4rem; font-weight: 700; color: var(--amber); line-height: 1;">3</div>
+          <div style="font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.45); margin-top: 6px;">Children</div>
+        </div>
+        <div style="width: 1px; height: 60px; background: rgba(200,135,42,0.2);"></div>
+        <div style="text-align: center;">
+          <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 4rem; font-weight: 700; color: var(--amber); line-height: 1;">5</div>
+          <div style="font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.45); margin-top: 6px;">Grandchildren</div>
+        </div>
+        <div style="width: 1px; height: 60px; background: rgba(200,135,42,0.2);"></div>
+        <div style="text-align: center;">
+          <div style="font-family: 'Playfair Display', Georgia, serif; font-size: 4rem; font-weight: 700; color: var(--amber); line-height: 1;">1</div>
+          <div style="font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.45); margin-top: 6px;">Amazing Family</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="section-inner">
+    <div class="section-label">Philosophy</div>
+    <h2>How John operates.<br>Every single day.</h2>
+    <div class="philosophy-grid">
+      <div class="philosophy-card fade-in">
+        <div class="philosophy-icon">🎯</div>
+        <h3>Honesty first, always</h3>
+        <p>He represents only the best products and companies available — and won't sell you something
+        he doesn't believe in. Non-negotiable.</p>
+      </div>
+      <div class="philosophy-card fade-in">
+        <div class="philosophy-icon">🎓</div>
+        <h3>Teaching is the job</h3>
+        <p>The goal was never to configure software. The goal has always been to transfer knowledge
+        to people who can use it to build better businesses.</p>
+      </div>
+      <div class="philosophy-card fade-in">
+        <div class="philosophy-icon">🤝</div>
+        <h3>A servant's heart</h3>
+        <p>"If we can't make a quality living honestly, with integrity and with a servant's heart...
+        then we don't deserve it." That's not a tagline. That's a compass.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">Contact</div>
+    <h2>Say hello.</h2>
+    <div class="contact-grid">
+      <div class="contact-intro fade-in">
+        <p>Whether you're a dealership group wrestling with DMS complexity, a vendor looking for
+        someone who actually knows how the service lane works, or someone who just wants to talk
+        about Apple, CDK, or why Toastmasters might change your career —</p>
+        <p>John's door is open.</p>
+        <p>Drop a note using the form and he'll get back to you. No bots. No call centers.
+        Just an old Parts Guy on the other end.</p>
+        <div class="contact-note">
+          Your information is only used to reply to your message. It is never shared, sold,
+          or used for anything else.
+        </div>
+      </div>
+      <div class="fade-in">
+        <div class="success-msg" id="success-msg">
+          Thanks for reaching out! John will get back to you shortly.
+        </div>
+        <!-- Replace YOUR_FORM_ID with your actual Formspree form ID from formspree.io -->
+        <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" name="first_name" placeholder="Jane" required>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" name="last_name" placeholder="Smith" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="What's on your mind?">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell me what you're working on..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    &copy; 2026 The Belens · Cape Coral, Florida ·
+    <a href="https://www.linkedin.com/in/johnbelen" target="_blank" rel="noopener">LinkedIn</a>
+  </p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  const form = document.getElementById('contact-form');
+  const successMsg = document.getElementById('success-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const action = form.getAttribute('action');
+
+    if (action.includes('YOUR_FORM_ID')) {
+      alert('Almost ready! Just sign up at formspree.io, create a form, and replace YOUR_FORM_ID in the HTML with your actual form ID.');
+      return;
+    }
+
+    try {
+      const res = await fetch(action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  });
+</script>
+</body>
+</html>
