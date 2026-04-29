@@ -539,6 +539,8 @@
     font-size: 0.95rem;
   }
 
+  .blog-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(15,30,46,0.1); }
+
   /* FOOTER */
   footer {
     background: var(--navy);
@@ -616,6 +618,8 @@
       margin: 0 0 0.75rem 0;
       padding: 14px 24px;
     }
+    .hero-inner { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+    .hero-photo { max-width: 260px; margin: 0 auto; }
 
     /* STAT BAR */
     .stat-bar {
@@ -652,6 +656,9 @@
     /* PHILOSOPHY */
     .philosophy-grid { grid-template-columns: 1fr; }
 
+    /* BLOG */
+    .blog-grid { grid-template-columns: 1fr !important; }
+
     /* CONTACT */
     .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .form-row { grid-template-columns: 1fr; }
@@ -684,7 +691,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">The<span>Belens</span></a>
+  <a href="#" class="nav-logo">John<span> Belen</span></a>
   <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
     <span></span><span></span><span></span>
   </button>
@@ -693,6 +700,7 @@
     <li><a href="#profile">Profile</a></li>
     <li><a href="#career">Career</a></li>
     <li><a href="#family">Family</a></li>
+    <li><a href="#blog">Blog</a></li>
     <li><a href="#philosophy">Philosophy</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -700,24 +708,34 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Cape Coral, Florida</div>
-    <h1>The guy who makes<br><em>dealerships actually work.</em></h1>
-    <p class="hero-sub">
-      Director of Fixed Operations Applications. CDK Jedi Master. Michigan Quality Hero.
-      Passionate teacher. Fierce advocate of outrageous customer service.
-      And yes — self-described "Just an old Parts Guy."
-    </p>
-    <div class="hero-badges">
-      <span class="badge">148 Dealerships</span>
-      <span class="badge">CDK / DMS Expert</span>
-      <span class="badge">Michigan Quality Hero</span>
-      <span class="badge">Toastmaster</span>
-      <span class="badge">Apple Loyalist</span>
+  <div class="hero-inner" style="display: grid; grid-template-columns: 340px 1fr; gap: 5rem; align-items: center; max-width: 1100px;">
+    <div class="hero-photo fade-in" style="position: relative; z-index: 1;">
+      <div style="border-radius: 12px; overflow: hidden; border: 3px solid rgba(200,135,42,0.3); box-shadow: 0 32px 80px rgba(0,0,0,0.5);">
+        <img src="john-belen.jpg" alt="John Belen" style="width: 100%; display: block; object-fit: cover;">
+      </div>
+      <div style="position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); background: var(--amber); color: var(--navy); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 20px; border-radius: 100px; white-space: nowrap;">
+        CDK Jedi Master
+      </div>
     </div>
-    <div>
-      <a href="#about" class="hero-cta">Learn More</a>
-      <a href="#contact" class="hero-cta-ghost">Say Hello</a>
+    <div style="position: relative; z-index: 1;">
+      <div class="hero-eyebrow">Cape Coral, Florida</div>
+      <h1>John Belen —<br><em>making dealerships<br>actually work.</em></h1>
+      <p class="hero-sub">
+        Director of Fixed Operations Applications. Michigan Quality Hero.
+        Compassionate teacher. Fierce advocate of outrageous customer service.
+        And yes — self-described "Just an old Parts Guy."
+      </p>
+      <div class="hero-badges">
+        <span class="badge">148 Dealerships</span>
+        <span class="badge">CDK / DMS Expert</span>
+        <span class="badge">Michigan Quality Hero</span>
+        <span class="badge">Toastmaster</span>
+        <span class="badge">Apple Loyalist</span>
+      </div>
+      <div>
+        <a href="#about" class="hero-cta">Learn More</a>
+        <a href="#contact" class="hero-cta-ghost">Say Hello</a>
+      </div>
     </div>
   </div>
 </section>
@@ -934,6 +952,54 @@
           <div style="font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,232,0.45); margin-top: 6px;">Amazing Family</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog" style="background: var(--cream);">
+  <div class="section-inner">
+    <div class="section-label">Blog</div>
+    <h2>Thoughts from the field.</h2>
+    <p style="color: var(--text-muted); max-width: 600px; margin-bottom: 3rem; font-size: 1rem; line-height: 1.85;">
+      25 years of dealerships, technology, teaching, and the occasional hard-won lesson.
+      Written honestly, from someone who's actually been there.
+    </p>
+    <div class="blog-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; margin-bottom: 2.5rem;">
+
+      <article class="blog-card fade-in" style="background: var(--white); border-radius: 8px; overflow: hidden; border: 1px solid rgba(15,30,46,0.08); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 6px; background: var(--amber);"></div>
+        <div style="padding: 1.75rem;">
+          <div style="font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">April 2026 · Technology</div>
+          <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.35;">Why DMS Data Is the Most Undervalued Asset in Any Dealership</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem;">Most dealers sit on a goldmine of operational data and never look at it twice. Here's what they're missing — and how to fix it.</p>
+          <a href="blog/dms-data-goldmine.html" style="font-size: 0.82rem; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid var(--amber); padding-bottom: 2px;">Read More →</a>
+        </div>
+      </article>
+
+      <article class="blog-card fade-in" style="background: var(--white); border-radius: 8px; overflow: hidden; border: 1px solid rgba(15,30,46,0.08); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 6px; background: var(--amber);"></div>
+        <div style="padding: 1.75rem;">
+          <div style="font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">March 2026 · Leadership</div>
+          <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.35;">Teaching vs. Training: Why the Difference Changes Everything</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem;">Training gets people through the week. Teaching builds careers. After 25 years on both sides of the whiteboard, here's what I know.</p>
+          <a href="blog/teaching-vs-training.html" style="font-size: 0.82rem; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid var(--amber); padding-bottom: 2px;">Read More →</a>
+        </div>
+      </article>
+
+      <article class="blog-card fade-in" style="background: var(--white); border-radius: 8px; overflow: hidden; border: 1px solid rgba(15,30,46,0.08); transition: transform 0.2s, box-shadow 0.2s;">
+        <div style="height: 6px; background: var(--amber);"></div>
+        <div style="padding: 1.75rem;">
+          <div style="font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">February 2026 · Culture</div>
+          <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.35;">The Parts Counter Was My MBA</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem;">Everything I know about customer service, operations, and people — I learned before I ever had a title worth putting on a business card.</p>
+          <a href="blog/parts-counter-mba.html" style="font-size: 0.82rem; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid var(--amber); padding-bottom: 2px;">Read More →</a>
+        </div>
+      </article>
+
+    </div>
+    <div style="text-align: center;">
+      <a href="blog/" style="display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(15,30,46,0.2); color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em; padding: 12px 28px; border-radius: var(--radius); transition: border-color 0.2s, color 0.2s;">View All Posts →</a>
     </div>
   </div>
 </section>
