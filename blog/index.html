@@ -1,0 +1,293 @@
+---
+layout: null
+title: Blog — The Belens
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — The Belens</title>
+<meta name="description" content="Thoughts from the field. 25+ years of dealerships, technology, teaching, and the occasional hard-won lesson.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f1e2e;
+    --navy-mid: #1a3048;
+    --amber: #c8872a;
+    --amber-light: #e8a84a;
+    --cream: #f5f0e8;
+    --cream-mid: #ede5d6;
+    --text-dark: #0f1e2e;
+    --text-muted: #5a6a7a;
+    --white: #ffffff;
+    --radius: 4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(15, 30, 46, 0.96);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+    border-bottom: 1px solid rgba(200, 135, 42, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--amber); }
+
+  .nav-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(245, 240, 232, 0.65);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-home:hover { color: var(--amber-light); }
+
+  /* BLOG HEADER */
+  .blog-header {
+    background: var(--navy);
+    padding: 8rem 2.5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(200,135,42,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .blog-header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .blog-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--amber);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .blog-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .blog-header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-header h1 em { font-style: italic; color: var(--amber-light); }
+
+  .blog-header p {
+    font-size: 1.05rem;
+    color: rgba(245, 240, 232, 0.6);
+    max-width: 540px;
+    line-height: 1.8;
+  }
+
+  /* POST LIST */
+  .post-list {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem 2.5rem 6rem;
+  }
+
+  /* Empty state */
+  .post-list-empty {
+    text-align: center;
+    padding: 4rem 0;
+    color: var(--text-muted);
+    font-style: italic;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+  }
+
+  /* Post entry */
+  .post-entry {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--cream-mid);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+  .post-entry:first-child { border-top: 1px solid var(--cream-mid); }
+  .post-entry:hover { opacity: 0.8; }
+  .post-entry:hover .post-entry-title { color: var(--amber); }
+
+  .post-entry-date {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    padding-top: 6px;
+    line-height: 1.5;
+  }
+
+  .post-entry-category {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .post-entry-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.25;
+    margin-bottom: 0.65rem;
+    transition: color 0.2s;
+    letter-spacing: -0.01em;
+  }
+
+  .post-entry-excerpt {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    max-width: 54ch;
+  }
+
+  .post-entry-read {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy);
+    border-bottom: 1px solid var(--amber);
+    padding-bottom: 1px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 2.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(200, 135, 42, 0.15);
+  }
+  footer p {
+    font-size: 0.82rem;
+    color: rgba(245, 240, 232, 0.35);
+    letter-spacing: 0.04em;
+  }
+  footer a { color: rgba(200, 135, 42, 0.6); text-decoration: none; }
+  footer a:hover { color: var(--amber-light); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .blog-header { padding: 7rem 1.5rem 3rem; }
+    .post-list { padding: 3rem 1.5rem 4rem; }
+    .post-entry { grid-template-columns: 1fr; gap: 0.5rem; }
+    .post-entry-date { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">John<span> Belen</span></a>
+  <a href="/" class="nav-home">← Home</a>
+</nav>
+
+<div class="blog-header">
+  <div class="blog-header-inner">
+    <div class="blog-eyebrow">From the Field</div>
+    <h1>Thoughts from<br><em>25 years in the trenches.</em></h1>
+    <p>Dealerships, technology, teaching, and the occasional hard-won lesson. Written honestly, by someone who's actually been there.</p>
+  </div>
+</div>
+
+<div class="post-list">
+  {% if site.posts.size == 0 %}
+    <p class="post-list-empty">Posts coming soon. Check back shortly.</p>
+  {% else %}
+    {% for post in site.posts %}
+    <a class="post-entry" href="{{ post.url | relative_url }}">
+      <div>
+        <div class="post-entry-date">{{ post.date | date: "%b %-d,\n%Y" }}</div>
+        {% if post.category %}<div class="post-entry-category">{{ post.category }}</div>{% endif %}
+      </div>
+      <div>
+        <div class="post-entry-title">{{ post.title }}</div>
+        {% if post.excerpt %}
+        <div class="post-entry-excerpt">{{ post.excerpt | strip_html | truncate: 180 }}</div>
+        {% endif %}
+        <span class="post-entry-read">Read More →</span>
+      </div>
+    </a>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<footer>
+  <p>
+    &copy; {{ 'now' | date: "%Y" }} The Belens &middot; Cape Coral, Florida &middot;
+    <a href="https://www.linkedin.com/in/johnbelen" target="_blank" rel="noopener">LinkedIn</a>
+  </p>
+</footer>
+
+</body>
+</html>

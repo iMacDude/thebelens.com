@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just an Old Parts Guy — The Belens</title>
+<meta name="description" content="There are worse things to be called. I've been called a lot of things over a career that's now in its fourth decade — Director, Consultant, Trainer, Expert. ...">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0f1e2e;
+    --navy-mid: #1a3048;
+    --amber: #c8872a;
+    --amber-light: #e8a84a;
+    --cream: #f5f0e8;
+    --cream-mid: #ede5d6;
+    --text-dark: #0f1e2e;
+    --text-muted: #5a6a7a;
+    --white: #ffffff;
+    --radius: 4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(15, 30, 46, 0.96);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 64px;
+    border-bottom: 1px solid rgba(200, 135, 42, 0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--amber); }
+
+  .nav-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(245, 240, 232, 0.65);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--amber-light); }
+  .nav-back::before { content: '←'; font-size: 1rem; letter-spacing: 0; }
+
+  /* POST HERO */
+  .post-hero {
+    min-height: 42vh;
+    background: var(--navy);
+    display: flex;
+    align-items: flex-end;
+    padding: 8rem 2.5rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 70% 40%, rgba(200,135,42,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .post-hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .post-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--amber);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .post-category::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .post-hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.25rem;
+  }
+
+  .post-hero h1 em { font-style: italic; color: var(--amber-light); }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .post-date {
+    font-size: 0.82rem;
+    color: rgba(245, 240, 232, 0.5);
+    letter-spacing: 0.06em;
+  }
+
+  .post-reading-time {
+    font-size: 0.82rem;
+    color: rgba(245, 240, 232, 0.35);
+  }
+
+  /* POST BODY */
+  .post-body {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem 4rem;
+  }
+
+  .post-body p {
+    font-size: 1.08rem;
+    color: var(--text-dark);
+    line-height: 1.9;
+    margin-bottom: 1.6rem;
+  }
+
+  .post-body h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 3rem 0 1.25rem;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .post-body h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 2.5rem 0 1rem;
+  }
+
+  .post-body blockquote {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    color: var(--navy-mid);
+    border-left: 3px solid var(--amber);
+    padding: 0.75rem 0 0.75rem 1.5rem;
+    margin: 2.5rem 0;
+    line-height: 1.6;
+  }
+
+  .post-body a {
+    color: var(--navy);
+    text-decoration: none;
+    border-bottom: 1px solid var(--amber);
+    padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .post-body a:hover { color: var(--amber); }
+
+  .post-body strong { font-weight: 600; }
+  .post-body em { font-style: italic; }
+
+  .post-body ul, .post-body ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .post-body li {
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    line-height: 1.85;
+    margin-bottom: 0.5rem;
+  }
+
+  .post-body hr {
+    border: none;
+    border-top: 1px solid var(--cream-mid);
+    margin: 3rem 0;
+  }
+
+  .post-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2.5rem 0;
+    border-radius: 6px;
+    box-shadow: 0 12px 40px rgba(15, 30, 46, 0.12);
+  }
+
+  /* AUTHOR CARD */
+  .post-author-card {
+    max-width: 760px;
+    margin: 0 auto 1rem;
+    padding: 0 2.5rem;
+  }
+
+  .post-author-inner {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 1.75rem 2rem;
+    border-left: 3px solid var(--amber);
+  }
+
+  .post-author-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .post-author-bio {
+    font-size: 0.88rem;
+    color: rgba(245, 240, 232, 0.55);
+    line-height: 1.65;
+  }
+
+  /* POST FOOTER NAV */
+  .post-footer {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 2.5rem 5rem;
+    border-top: 1px solid var(--cream-mid);
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .post-footer a {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .post-footer a:hover { color: var(--amber); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 2.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(200, 135, 42, 0.15);
+  }
+  footer p {
+    font-size: 0.82rem;
+    color: rgba(245, 240, 232, 0.35);
+    letter-spacing: 0.04em;
+  }
+  footer a { color: rgba(200, 135, 42, 0.6); text-decoration: none; }
+  footer a:hover { color: var(--amber-light); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .post-hero { padding: 7rem 1.5rem 2.5rem; }
+    .post-hero h1 { font-size: 2rem; }
+    .post-body { padding: 3rem 1.5rem 3rem; }
+    .post-author-card { padding: 0 1.5rem; }
+    .post-footer { padding: 2rem 1.5rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">John<span> Belen</span></a>
+  <a href="/blog/" class="nav-back">All Posts</a>
+</nav>
+
+<div class="post-hero">
+  <div class="post-hero-inner">
+    <div class="post-category">Origin Stories</div>
+    <h1>Just an Old Parts Guy</h1>
+    <div class="post-meta">
+      <span class="post-date">May 11, 2026</span>
+      <span class="post-reading-time">5 min read</span>
+    </div>
+  </div>
+</div>
+
+<div class="post-body">
+  <p>There are worse things to be called.</p>
+
+<p>I’ve been called a lot of things over a career that’s now in its fourth decade — Director, Consultant, Trainer, Expert. Once, memorably, a CDK Jedi Master, which I still think deserves its own business card. But the one that stuck, the one I actually put on my own website, is the one that started it all: <em>Just an old Parts Guy.</em></p>
+
+<p>People hear that and they sometimes think I’m being modest. I’m not. Not exactly, anyway.</p>
+
+<hr />
+
+<p>It started behind a counter in Michigan. Williams AutoWorld, 1988. The job was simple enough in theory: somebody needs a part, you find the part, the part goes on the car, the car goes back to the customer. Repeat. The magic, though — and there was magic in it, if you paid attention — was everything that happened in between.</p>
+
+<p>You learn a lot about people from behind a parts counter. You learn that the guy who comes in angry about a delay isn’t actually angry about the part. He’s angry because he has somewhere to be, or because someone let him down before, or because this is the third time something has gone sideways this week and you’re the one standing in front of him right now. The part is just the surface. Underneath the part is a person who needs someone to actually <em>listen</em> to them.</p>
+
+<p>I started listening.</p>
+
+<p>After a while, I noticed something: the dealers who were struggling weren’t struggling because they lacked inventory or good mechanics. They were struggling because nobody had ever taught them how their systems worked. The DMS — the Dealer Management System, the software that runs everything from parts to service to accounting — was this vast, underused engine sitting right in the middle of their operation, and most people treated it like a magic box. Data goes in. Invoices come out. Don’t touch the settings.</p>
+
+<p>That bothered me the way a crooked picture on a wall bothers me. I couldn’t walk past it.</p>
+
+<hr />
+
+<p>So I started teaching. Informally at first — just explaining to whoever would listen why a particular setting mattered, what a certain report was actually telling them, how you could use the system to make the service lane run smoother instead of fighting it every day. People started finding me. Word gets around in automotive. <em>“Go ask John, he’ll know.”</em></p>
+
+<p>Nineteen years at Williams AutoWorld. Technician, Service Manager, Parts Manager, Systems Administrator, IT Manager. Five buildings, 98 workstations, a network I built and managed myself, and a parts operation that finished in the top ten in the country year after year — not by luck, but by knowing exactly what the data was saying and acting on it.</p>
+
+<p>I left in 2007 and never really stopped teaching.</p>
+
+<hr />
+
+<p>Here’s what I know now that I wish I’d been able to articulate back then: the job was never really about parts, or software, or even technology. It was always about people. The system is just the language. The real work is translation — taking something complicated and making it understandable enough that the person in front of you can use it to build something better.</p>
+
+<p>That’s what the Parts Guy learned behind the counter. That’s what the Director still does today, thirty-plus years later, across a hundred and forty-eight dealerships nationwide.</p>
+
+<p>The title on the org chart has gotten fancier. The job description is longer. The territory is bigger.</p>
+
+<p>But I still think of myself as the guy who found the part, explained why it mattered, and made sure the car went back to the customer better than it came in.</p>
+
+<p>Just an old Parts Guy. Still. And proud of it.</p>
+
+</div>
+
+<div class="post-author-card">
+  <div class="post-author-inner">
+    <div class="post-author-name">John Belen</div>
+    <div class="post-author-bio">Director of Fixed Operations Applications. 25+ years in automotive. Michigan Quality Hero. Self-described "Just an old Parts Guy." Writing honestly from Cape Coral, Florida.</div>
+  </div>
+</div>
+
+<div class="post-footer">
+  <a href="/blog/">← All Posts</a>
+  <a href="/">thebelens.com</a>
+</div>
+
+<footer>
+  <p>
+    &copy; 2026 The Belens &middot; Cape Coral, Florida &middot;
+    <a href="https://www.linkedin.com/in/johnbelen" target="_blank" rel="noopener">LinkedIn</a>
+  </p>
+</footer>
+
+</body>
+</html>
