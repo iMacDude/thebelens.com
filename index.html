@@ -13,15 +13,19 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --navy: #0f1e2e;
-    --navy-mid: #1a3048;
+    --navy: #1a0f07;
+    --navy-mid: #2d1a0e;
+    --mahogany: #3d2010;
+    --mahogany-mid: #4f2d18;
     --amber: #c8872a;
     --amber-light: #e8a84a;
-    --cream: #f5f0e8;
-    --cream-mid: #ede5d6;
-    --text-dark: #0f1e2e;
-    --text-muted: #5a6a7a;
-    --white: #ffffff;
+    --brass: #b8943f;
+    --brass-light: #d4af6a;
+    --cream: #f0e8d8;
+    --cream-mid: #e8dcc8;
+    --text-dark: #1e1208;
+    --text-muted: #5a4a38;
+    --white: #faf6ef;
     --radius: 4px;
   }
 
@@ -31,52 +35,67 @@
     font-family: 'DM Sans', system-ui, sans-serif;
     background: var(--cream);
     color: var(--text-dark);
-    font-size: 17px;
-    line-height: 1.7;
+    font-size: 18px;
+    line-height: 1.8;
   }
 
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(15, 30, 46, 0.96);
-    backdrop-filter: blur(12px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2.5rem;
-    height: 64px;
-    border-bottom: 1px solid rgba(200, 135, 42, 0.2);
-  }
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(61, 32, 16, 0.97);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+      border-bottom: 1px solid rgba(184, 148, 63, 0.25);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
 
-  .nav-logo {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.25rem;
-    color: var(--cream);
-    letter-spacing: 0.02em;
-    text-decoration: none;
-  }
+    .nav-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
 
-  .nav-logo span { color: var(--amber); }
+    .nav-logo span { color: var(--amber); }
 
-  nav ul {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
+    nav ul {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
+    }
 
-  nav a {
-    color: rgba(245, 240, 232, 0.75);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
+    /* THE NAMEPLATE TAG */
+    nav ul li a {
+      color: rgba(240, 232, 216, 0.82);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      padding: 5px 13px;
+      border-radius: 2px;
+      border: 1px solid rgba(184, 148, 63, 0.22);
+      background: rgba(255, 220, 160, 0.06);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.25),
+                  0 1px 1px rgba(255,220,140,0.08);
+      display: block;
+    }
 
-  nav a:hover { color: var(--amber-light); }
+    nav ul li a:hover {
+      color: var(--brass-light);
+      border-color: rgba(184, 148, 63, 0.55);
+      background: rgba(255, 220, 160, 0.12);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.2),
+                  0 0 8px rgba(184,148,63,0.15);
+    }
 
   /* HERO */
   .hero {

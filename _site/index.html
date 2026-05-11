@@ -11,15 +11,19 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --navy: #0f1e2e;
-    --navy-mid: #1a3048;
+    --navy: #1a0f07;
+    --navy-mid: #2d1a0e;
+    --mahogany: #3d2010;
+    --mahogany-mid: #4f2d18;
     --amber: #c8872a;
     --amber-light: #e8a84a;
-    --cream: #f5f0e8;
-    --cream-mid: #ede5d6;
-    --text-dark: #0f1e2e;
-    --text-muted: #5a6a7a;
-    --white: #ffffff;
+    --brass: #b8943f;
+    --brass-light: #d4af6a;
+    --cream: #f0e8d8;
+    --cream-mid: #e8dcc8;
+    --text-dark: #1e1208;
+    --text-muted: #5a4a38;
+    --white: #faf6ef;
     --radius: 4px;
   }
 
@@ -29,52 +33,67 @@
     font-family: 'DM Sans', system-ui, sans-serif;
     background: var(--cream);
     color: var(--text-dark);
-    font-size: 17px;
-    line-height: 1.7;
+    font-size: 18px;
+    line-height: 1.8;
   }
 
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(15, 30, 46, 0.96);
-    backdrop-filter: blur(12px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2.5rem;
-    height: 64px;
-    border-bottom: 1px solid rgba(200, 135, 42, 0.2);
-  }
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(61, 32, 16, 0.97);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+      border-bottom: 1px solid rgba(184, 148, 63, 0.25);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
 
-  .nav-logo {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.25rem;
-    color: var(--cream);
-    letter-spacing: 0.02em;
-    text-decoration: none;
-  }
+    .nav-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
 
-  .nav-logo span { color: var(--amber); }
+    .nav-logo span { color: var(--amber); }
 
-  nav ul {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
+    nav ul {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
+    }
 
-  nav a {
-    color: rgba(245, 240, 232, 0.75);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
+    /* THE NAMEPLATE TAG */
+    nav ul li a {
+      color: rgba(240, 232, 216, 0.82);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      padding: 5px 13px;
+      border-radius: 2px;
+      border: 1px solid rgba(184, 148, 63, 0.22);
+      background: rgba(255, 220, 160, 0.06);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.25),
+                  0 1px 1px rgba(255,220,140,0.08);
+      display: block;
+    }
 
-  nav a:hover { color: var(--amber-light); }
+    nav ul li a:hover {
+      color: var(--brass-light);
+      border-color: rgba(184, 148, 63, 0.55);
+      background: rgba(255, 220, 160, 0.12);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.2),
+                  0 0 8px rgba(184,148,63,0.15);
+    }
 
   /* HERO */
   .hero {
@@ -766,38 +785,69 @@
     <div class="about-grid">
       <div class="about-text fade-in">
         <div class="section-label">About</div>
-        <h2>The story behind the title.</h2>
+        <h2>The story behind<br>the title.</h2>
         <p>
-          There's a reason John Belen calls himself "just an old Parts Guy" — it's not false modesty,
-          it's a badge of honor. A career that started on the parts counter became a masterclass in
-          <strong>how dealerships actually run</strong>, and why the people in the back of the house
-          are just as important as the ones closing deals out front.
+          I went to school to be a technician — but that's a story for another day.
+          What I can tell you is that I started behind a parts counter, and I loved
+          that job the way you love something when you're genuinely good at it and you know it.
+          Not because of the title. Because of the customers.
         </p>
         <p>
-          Today John oversees Fixed Operations applications for <strong>148 automobile dealerships</strong>
-          across the country at Asbury Automotive Group — one of the largest automotive retail groups in
-          the US. His specialty? Taking the complexity of Dealer Management Systems and turning it into
-          something the people who actually use it can understand, love, and profit from.
+          I had a habit that some people thought was unusual. If someone came in needing
+          a wiper blade, a bulb, a small clip — I'd sell it to them and then walk out
+          to the parking lot and install it myself. A few people suggested I was taking
+          work away from my technicians. I saw it differently. A customer who feels
+          genuinely taken care of doesn't shop around. They come back. They drive
+          past three other dealers to get to your shop — and I watched that happen, more than once.
         </p>
         <p>
-          He's an experienced Toastmaster, an accomplished public speaker, an Apple fanatic since
-          before it was fashionable, and the kind of teacher who stays after class because he genuinely
-          wants to see you succeed.
+          One afternoon a woman came in who'd been losing hubcaps. Not once — repeatedly.
+          Nobody could figure out why. I asked for her keys, pulled her Subaru into the bay,
+          and actually looked. Michigan winters salt the roads heavily, and the corrosion
+          underneath her clear coat was physically pushing every new hubcap off the rim.
+          Obvious, once you saw it. Apparently not obvious enough for anyone else to check.
+          I took some sandpaper, smoothed it down, popped the new caps on, covered the parts
+          from my own policy account, and sent her home without mentioning it.
+        </p>
+        <p>
+          A month later, the owner of the dealership — Wayne Williams — walked over with a letter.
+          She'd written to the <strong>Michigan Quality Council</strong> and to Mr. Williams personally,
+          inviting us to a luncheon at the Ford Estate in Detroit. They wanted to present us with an award.
+          The certificate was signed by four people — including the <strong>Governor of Michigan</strong>.
+          I never met him, but it was pretty cool.
+        </p>
+        <p>
+          I'll be honest — I spent some time afterward wondering why it was remarkable at all.
+          All I had done was look at the wheel. Do the obvious thing. Treat one person
+          the way I'd want someone to treat my mother. That's still the whole job,
+          thirty-five years later. The title's gotten fancier. The principle hasn't moved an inch.
         </p>
         <div class="award-card">
-          <div class="award-title">Michigan Quality Hero — Michigan Quality Council</div>
-          <p>Awarded for doing what he felt was simply "right" for customers and his business.
-          Which pretty much sums up the whole philosophy.</p>
+          <div class="award-title">Michigan Quality Hero &mdash; August 1999</div>
+          <p>Presented by the Michigan Quality Council for outstanding customer service.
+          As seen in the Lansing State Journal, August 30, 1999. &nbsp;
+          <a href="/assets/images/michigan-quality-hero-certificate.pdf" target="_blank"
+             style="color: var(--amber-light); text-decoration: none; border-bottom: 1px solid rgba(200,135,42,0.4); padding-bottom: 1px;">
+            View Certificate &rarr;
+          </a></p>
         </div>
       </div>
       <div class="fade-in" style="animation-delay: 0.15s">
-        <div class="section-label">Specialties</div>
-        <h2 style="font-size: 1.5rem; margin-bottom: 1.75rem;">What John does better than almost anyone.</h2>
-        <ul class="skills-list">
+        <div style="margin-bottom: 2rem;">
+          <img src="/assets/images/michigan-quality-hero-newspaper.JPG"
+               alt="Lansing State Journal, August 30 1999 — John Belen named Michigan Quality Hero"
+               style="width: 100%; border-radius: 6px; box-shadow: 0 12px 40px rgba(15,30,46,0.18); border: 1px solid var(--cream-mid);">
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.75rem; font-style: italic; line-height: 1.5;">
+            Lansing State Journal &mdash; Business People &mdash; August 30, 1999.<br>
+            &ldquo;John Belen of Williams BMW Subaru named Quality Hero by the Michigan Quality Council.&rdquo;
+          </p>
+        </div>
+        <div class="section-label" style="margin-top: 2rem;">Specialties</div>
+        <ul class="skills-list" style="margin-top: 1rem;">
           <li>CDK / DMS Fixed Operations configuration and optimization</li>
           <li>Empathic listening — actually hearing what clients need</li>
           <li>Cross-platform dealership standards and data management</li>
-          <li>Parts & Service department process design</li>
+          <li>Parts &amp; Service department process design</li>
           <li>Staff training that sticks — because he loves to teach</li>
           <li>Creative problem solving that reaches the goal</li>
           <li>Public speaking and executive-level presentation</li>
@@ -967,39 +1017,21 @@
     </p>
     <div class="blog-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; margin-bottom: 2.5rem;">
 
+      
       <article class="blog-card fade-in" style="background: var(--white); border-radius: 8px; overflow: hidden; border: 1px solid rgba(15,30,46,0.08); transition: transform 0.2s, box-shadow 0.2s;">
         <div style="height: 6px; background: var(--amber);"></div>
         <div style="padding: 1.75rem;">
-          <div style="font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">April 2026 · Technology</div>
-          <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.35;">Why DMS Data Is the Most Undervalued Asset in Any Dealership</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem;">Most dealers sit on a goldmine of operational data and never look at it twice. Here's what they're missing — and how to fix it.</p>
-          <a href="blog/dms-data-goldmine.html" style="font-size: 0.82rem; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid var(--amber); padding-bottom: 2px;">Read More →</a>
+          <div style="font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">May 2026 &middot; Origin Stories</div>
+          <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.35;">Just an Old Parts Guy</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem;">There are worse things to be called. I've been called a lot of things over a career that's now in its fourth decade — Director, Consultan...</p>
+          <a href="/blog/2026/05/just-an-old-parts-guy/" style="font-size: 0.82rem; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid var(--amber); padding-bottom: 2px;">Read More →</a>
         </div>
       </article>
-
-      <article class="blog-card fade-in" style="background: var(--white); border-radius: 8px; overflow: hidden; border: 1px solid rgba(15,30,46,0.08); transition: transform 0.2s, box-shadow 0.2s;">
-        <div style="height: 6px; background: var(--amber);"></div>
-        <div style="padding: 1.75rem;">
-          <div style="font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">March 2026 · Leadership</div>
-          <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.35;">Teaching vs. Training: Why the Difference Changes Everything</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem;">Training gets people through the week. Teaching builds careers. After 25 years on both sides of the whiteboard, here's what I know.</p>
-          <a href="blog/teaching-vs-training.html" style="font-size: 0.82rem; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid var(--amber); padding-bottom: 2px;">Read More →</a>
-        </div>
-      </article>
-
-      <article class="blog-card fade-in" style="background: var(--white); border-radius: 8px; overflow: hidden; border: 1px solid rgba(15,30,46,0.08); transition: transform 0.2s, box-shadow 0.2s;">
-        <div style="height: 6px; background: var(--amber);"></div>
-        <div style="padding: 1.75rem;">
-          <div style="font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">February 2026 · Culture</div>
-          <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.35;">The Parts Counter Was My MBA</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem;">Everything I know about customer service, operations, and people — I learned before I ever had a title worth putting on a business card.</p>
-          <a href="blog/parts-counter-mba.html" style="font-size: 0.82rem; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid var(--amber); padding-bottom: 2px;">Read More →</a>
-        </div>
-      </article>
+      
 
     </div>
     <div style="text-align: center;">
-      <a href="blog/" style="display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(15,30,46,0.2); color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em; padding: 12px 28px; border-radius: var(--radius); transition: border-color 0.2s, color 0.2s;">View All Posts →</a>
+      <a href="/blog/" style="display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(15,30,46,0.2); color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.04em; padding: 12px 28px; border-radius: var(--radius); transition: border-color 0.2s, color 0.2s;">View All Posts →</a>
     </div>
   </div>
 </section>
