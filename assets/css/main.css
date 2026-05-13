@@ -1,0 +1,398 @@
+/* ============================================================
+   thebelens.com — Shared Stylesheet
+   Warm mahogany + brass palette. Speakeasy, not boardroom.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --mahogany:       #3d2010;
+  --mahogany-mid:   #4f2d18;
+  --mahogany-deep:  #1a0f07;
+  --amber:          #c8872a;
+  --amber-light:    #e8a84a;
+  --brass:          #b8943f;
+  --brass-light:    #d4af6a;
+  --cream:          #f0e8d8;
+  --cream-mid:      #e8dcc8;
+  --cream-dark:     #ddd0b8;
+  --text-dark:      #1e1208;
+  --text-muted:     #5a4a38;
+  --white:          #faf6ef;
+  --radius:         4px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* ── SHARED NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(61, 32, 16, 0.97);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 64px;
+  border-bottom: 1px solid rgba(184, 148, 63, 0.25);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--amber); }
+
+/* Nameplate tag — the subtle cigar locker detail */
+.nav-tag {
+  color: rgba(240, 232, 216, 0.82);
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  padding: 5px 13px;
+  border-radius: 2px;
+  border: 1px solid rgba(184, 148, 63, 0.22);
+  background: rgba(255, 220, 160, 0.06);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.25),
+              0 1px 1px rgba(255,220,140,0.08);
+}
+.nav-tag:hover {
+  color: var(--brass-light);
+  border-color: rgba(184, 148, 63, 0.55);
+  background: rgba(255, 220, 160, 0.12);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.2),
+              0 0 8px rgba(184,148,63,0.15);
+}
+
+/* ── SHARED HERO (dark header band) ── */
+.page-hero {
+  background: var(--mahogany-deep);
+  display: flex;
+  align-items: flex-end;
+  padding: 8rem 2.5rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(200,135,42,0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+.page-hero-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--amber);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--amber);
+}
+
+.page-hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.1rem;
+}
+.page-hero h1 em { font-style: italic; color: var(--amber-light); }
+
+.page-hero p {
+  font-size: 1.05rem;
+  color: rgba(240, 232, 216, 0.6);
+  max-width: 540px;
+  line-height: 1.8;
+}
+
+/* ── SHARED FOOTER ── */
+footer {
+  background: var(--mahogany-deep);
+  padding: 2.5rem;
+  text-align: center;
+  border-top: 1px solid rgba(184, 148, 63, 0.15);
+}
+footer p {
+  font-size: 0.82rem;
+  color: rgba(240, 232, 216, 0.35);
+  letter-spacing: 0.04em;
+}
+footer a { color: rgba(200, 135, 42, 0.6); text-decoration: none; }
+footer a:hover { color: var(--amber-light); }
+
+/* ── BLOG INDEX — POST LIST ── */
+.post-list {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 2.5rem 6rem;
+}
+
+.post-list-empty {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.15rem;
+}
+
+.post-entry {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--cream-mid);
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s;
+}
+.post-entry:first-child { border-top: 1px solid var(--cream-mid); }
+.post-entry:hover { opacity: 0.78; }
+.post-entry:hover .post-entry-title { color: var(--amber); }
+
+.post-entry-date {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  padding-top: 5px;
+  line-height: 1.6;
+}
+
+.post-entry-category {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.post-entry-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.25;
+  margin-bottom: 0.65rem;
+  transition: color 0.2s;
+  letter-spacing: -0.01em;
+}
+
+.post-entry-excerpt {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  max-width: 56ch;
+}
+
+.post-entry-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mahogany);
+  border-bottom: 1px solid var(--amber);
+  padding-bottom: 1px;
+}
+
+/* ── BLOG POST PAGE ── */
+.post-hero { min-height: 40vh; }
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.post-date {
+  font-size: 0.82rem;
+  color: rgba(240, 232, 216, 0.5);
+  letter-spacing: 0.06em;
+}
+.post-reading-time {
+  font-size: 0.82rem;
+  color: rgba(240, 232, 216, 0.35);
+}
+
+/* Post body — the reading experience */
+.post-body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4.5rem 2.5rem 4rem;
+}
+
+.post-body p {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  line-height: 1.95;
+  margin-bottom: 1.65rem;
+}
+
+.post-body h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 3.5rem 0 1.25rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.post-body h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 2.5rem 0 1rem;
+}
+
+.post-body blockquote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  color: var(--mahogany-mid);
+  border-left: 3px solid var(--amber);
+  padding: 0.75rem 0 0.75rem 1.75rem;
+  margin: 2.5rem 0;
+  line-height: 1.65;
+}
+
+.post-body a {
+  color: var(--mahogany);
+  text-decoration: none;
+  border-bottom: 1px solid var(--amber);
+  padding-bottom: 1px;
+  transition: color 0.2s;
+}
+.post-body a:hover { color: var(--amber); }
+
+.post-body strong { font-weight: 600; }
+.post-body em { font-style: italic; }
+
+.post-body ul, .post-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.65rem;
+}
+.post-body li {
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  line-height: 1.9;
+  margin-bottom: 0.5rem;
+}
+
+.post-body hr {
+  border: none;
+  border-top: 1px solid var(--cream-dark);
+  margin: 3.5rem 0;
+}
+
+.post-body img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 2.5rem 0;
+  border-radius: 6px;
+  box-shadow: 0 12px 40px rgba(30, 18, 8, 0.14);
+}
+
+/* Author card */
+.post-author-card {
+  max-width: 720px;
+  margin: 0 auto 1rem;
+  padding: 0 2.5rem;
+}
+.post-author-inner {
+  background: var(--mahogany-deep);
+  border-radius: 6px;
+  padding: 1.75rem 2rem;
+  border-left: 3px solid var(--amber);
+}
+.post-author-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--cream);
+  margin-bottom: 0.4rem;
+}
+.post-author-bio {
+  font-size: 0.88rem;
+  color: rgba(240, 232, 216, 0.55);
+  line-height: 1.65;
+}
+
+/* Post footer nav */
+.post-footer {
+  max-width: 720px;
+  margin: 1.5rem auto 0;
+  padding: 2rem 2.5rem 5rem;
+  border-top: 1px solid var(--cream-mid);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.post-footer a {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.post-footer a:hover { color: var(--amber); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 1.5rem; }
+  .page-hero { padding: 7rem 1.5rem 2.5rem; }
+  .post-list { padding: 3rem 1.5rem 4rem; }
+  .post-entry { grid-template-columns: 1fr; gap: 0.4rem; }
+  .post-entry-date { padding-top: 0; }
+  .post-body { padding: 3rem 1.5rem 3rem; }
+  .post-author-card { padding: 0 1.5rem; }
+  .post-footer { padding: 2rem 1.5rem 3rem; }
+}
