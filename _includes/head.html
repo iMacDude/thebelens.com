@@ -1,0 +1,21 @@
+<!-- _includes/head.html -->
+<!-- Loaded by every page. Add site-wide <head> content here. -->
+
+<!-- SEO — jekyll-seo-tag handles title, description, og:, twitter: cards -->
+{% seo %}
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+<link rel="apple-touch-icon" href="/assets/images/favicon.ico">
+
+<!-- RSS Feed -->
+<link rel="alternate" type="application/rss+xml"
+      title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
+
+<!-- Cloudflare Web Analytics — privacy-first, no cookies, free -->
+<!-- PASTE YOUR CLOUDFLARE BEACON SCRIPT HERE AFTER SETUP -->
+<!-- <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+     data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script> -->

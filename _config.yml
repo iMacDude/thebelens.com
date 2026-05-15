@@ -1,40 +1,69 @@
-# Site
+# ============================================================
+# thebelens.com — Jekyll Configuration
+# ============================================================
+
+# Site identity
 title: The Belens
-tagline: John Belen — Cape Coral, Florida
+tagline: "Just an old Parts Guy — and proud of it."
 description: >-
-  Thoughts from the field. 25+ years of dealerships, technology, teaching,
-  and the occasional hard-won lesson. Written honestly, by someone who's actually been there.
-url: https://thebelens.com
+  John Belen writes honestly about 35+ years in automotive dealerships,
+  technology, teaching, leadership, and the occasional hard-won lesson.
+  From a parts counter in Michigan to directing Fixed Operations for 148
+  dealerships nationwide. Cape Coral, Florida.
+url: "https://thebelens.com"
 baseurl: ""
 lang: en_US
 
+# Author — used by jekyll-seo-tag for structured data
 author:
   name: John Belen
+  email: john@thebelens.com
+  twitter: ""
 
+# Social links — used by jekyll-seo-tag
 social:
   name: John Belen
   links:
     - https://www.linkedin.com/in/johnbelen
+    - https://thebelens.com
 
-# Build
+# Open Graph image — shown when someone shares your site on social
+# Drop a 1200x630px image at this path
+logo: /assets/images/og-image.jpg
+
+# Google Search Console verification
+# After claiming in GSC, paste your verification meta tag content here:
+# google_site_verification: "PASTE_CODE_HERE"
+
+# Build settings
 markdown: kramdown
 highlighter: rouge
 permalink: /blog/:year/:month/:slug/
 timezone: America/New_York
 
-# Plugins (all GitHub Pages whitelisted)
+# Plugins — all GitHub Pages whitelisted
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# Front-matter defaults — every post automatically gets layout: post
+# jekyll-feed config
+feed:
+  title: "The Belens — From the Field"
+  subtitle: >-
+    John Belen writes honestly about automotive, technology,
+    teaching, and the hard-won lessons of a 35-year career.
+  path: feed.xml
+
+# Front-matter defaults
 defaults:
   - scope:
       path: ""
       type: posts
     values:
       layout: post
+      author: John Belen
+      image: /assets/images/og-image.jpg
 
 # Exclude from build
 exclude:
@@ -44,3 +73,4 @@ exclude:
   - README.md
   - CLAUDE.md
   - .claude
+  - extract_blog.py
