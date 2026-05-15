@@ -33,7 +33,7 @@ logo: /assets/images/og-image.jpg
 
 # Google Search Console verification
 # After claiming in GSC, paste your verification meta tag content here:
-# google_site_verification: "PASTE_CODE_HERE"
+google_site_verification: "ZXean5KheAJg_YQRz5oJ1DxRe4Ot3K-neI-Kd75_QgA"
 
 # Build settings
 markdown: kramdown
