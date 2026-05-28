@@ -1091,7 +1091,7 @@
           Thanks for reaching out! John will get back to you shortly.
         </div>
         <!-- Replace YOUR_FORM_ID with your actual Formspree form ID from formspree.io -->
-        <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <form id="contact-form" action="https://formspree.io/f/xrejeegl" method="POST">
           <div class="form-row">
             <div class="form-group">
               <label for="fname">First Name</label>
@@ -1161,12 +1161,7 @@
     const data = new FormData(form);
     const action = form.getAttribute('action');
 
-    if (action.includes('YOUR_FORM_ID')) {
-      alert('Almost ready! Just sign up at formspree.io, create a form, and replace YOUR_FORM_ID in the HTML with your actual form ID.');
-      return;
-    }
-
-    try {
+  try {
       const res = await fetch(action, {
         method: 'POST',
         body: data,
