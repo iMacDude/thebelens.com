@@ -31,6 +31,12 @@
   </div>
 </div>
 
+{% if page.image %}
+<div class="post-image">
+  <img src="{{ page.image }}" alt="{{ page.image_alt }}" style="width:100%; max-height:480px; object-fit:cover; display:block;">
+</div>
+{% endif %}
+
 <div class="post-body">
   {{ content }}
 </div>

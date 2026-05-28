@@ -3,7 +3,7 @@ title: "The Funniest Man in the Room"
 date: 2026-05-27
 category: "People Who Shaped Me"
 reading_time: 5
-image: /assets/images/Mac and Me.jpg
+image: /assets/images/mac-and-me.jpg
 image_alt: "Mac McGee and John Belen"
 excerpt: "Mac was my mentor. I didn't know it when I met him. He was an old parts guy who'd drift off to sleep at the counter around 9pm, an unfiltered Pall Mall slowly extinguishing itself in its ashtray. So knowledgeable. So unapologetically authentic."
 ---
