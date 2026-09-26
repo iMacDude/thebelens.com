@@ -604,6 +604,107 @@
   .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   /* RESPONSIVE */
+
+  /* ── Newspaper clipping ─────────────────────────────────────────────
+     A wide document image. It previously lived in the ~410px right column
+     of .about-grid, where the newsprint rendered far too small to read. */
+  .clipping {
+    margin: 4rem 0 0;
+    max-width: 100%;
+  }
+  .clipping a {
+    display: block;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(15,30,46,0.18);
+    border: 1px solid var(--cream-mid);
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+  .clipping a:hover {
+    box-shadow: 0 18px 54px rgba(15,30,46,0.28);
+    transform: translateY(-2px);
+  }
+  .clipping img {
+    /* height:auto is load-bearing. The width/height attributes exist so the
+       browser can reserve the right box before the image loads (prevents
+       layout shift) — but without height:auto the literal height="1080"
+       fights width:100% and stretches the image into a tall smear. */
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .clipping figcaption {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.9rem;
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .clipping-zoom {
+    display: block;
+    margin-top: 0.4rem;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    color: var(--amber);
+  }
+
+
+  /* ── Latest-post banner ─────────────────────────────────────────────
+     Thin strip directly beneath the fixed 64px nav, above the hero.
+     margin-top:64px clears the nav, which is position:fixed. */
+  .latest-banner {
+    margin-top: 64px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    text-decoration: none;
+    background: var(--mahogany);
+    border-bottom: 1px solid rgba(184, 148, 63, 0.25);
+    border-left: 3px solid var(--amber);
+    overflow: hidden;
+    transition: background 0.25s;
+  }
+  .latest-banner:hover { background: var(--mahogany-mid); }
+  .latest-banner:focus-visible { outline: 3px solid var(--amber); outline-offset: -3px; }
+  .latest-banner-thumb {
+    width: 64px; min-width: 64px; height: 64px;
+    object-fit: cover; display: block;
+    border-right: 1px solid rgba(184, 148, 63, 0.25);
+  }
+  .latest-banner-text {
+    display: flex; flex-direction: column; justify-content: center;
+    gap: 0.18rem; padding: 0.6rem 1.3rem; min-width: 0; flex: 1;
+  }
+  .latest-banner-label {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; color: var(--amber); line-height: 1;
+  }
+  .latest-banner-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700; font-size: 1rem; color: var(--cream); line-height: 1.25;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .latest-banner:hover .latest-banner-title { color: var(--white); }
+  .latest-banner-meta {
+    font-size: 0.68rem; letter-spacing: 0.08em; color: var(--brass-light);
+    line-height: 1; opacity: 0.85;
+  }
+  .latest-banner-cta {
+    display: flex; align-items: center; padding: 0 1.4rem; flex-shrink: 0;
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 600; color: var(--brass-light);
+    border-left: 1px solid rgba(184, 148, 63, 0.25);
+    transition: color 0.25s;
+  }
+  .latest-banner:hover .latest-banner-cta { color: var(--amber-light); }
+
+  /* The hero pads 8rem off the top to clear the fixed nav. With the banner
+     sitting in that space, trim the hero so the gap does not double up. */
+  .latest-banner + .hero { padding-top: 4rem; min-height: calc(100vh - 128px); }
+
   @media (max-width: 768px) {
 
     /* NAV — hamburger */
@@ -664,6 +765,13 @@
 
     /* ABOUT */
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .clipping { margin-top: 2.5rem; }
+
+    /* Banner: drop the CTA, let the title wrap to two lines */
+    .latest-banner-cta { display: none; }
+    .latest-banner-title { white-space: normal; font-size: 0.92rem; }
+    .latest-banner-thumb { width: 56px; min-width: 56px; height: 56px; }
+    .latest-banner-text { padding: 0.55rem 1rem; }
 
     /* PROFILE cards */
     .profile-grid { grid-template-columns: 1fr !important; }
@@ -731,6 +839,27 @@
 </nav>
 
 <main id="main">
+
+  <!-- Latest-post banner. Mirrors footprintsoffrank.com. site.posts is already
+       newest-first, so .first is the latest. Everything is guarded: no posts,
+       or a post with no image, both degrade cleanly rather than emitting a
+       broken <img> — the failure mode that shipped 404 heroes on three posts. -->
+  {%- assign latest = site.posts.first -%}
+  {%- if latest -%}
+  <a class="latest-banner" href="{{ latest.url | relative_url }}">
+    {%- if latest.image %}
+    <img class="latest-banner-thumb" src="{{ latest.image | relative_url }}"
+         alt="" aria-hidden="true" loading="lazy" decoding="async" width="64" height="64">
+    {%- endif %}
+    <span class="latest-banner-text">
+      <span class="latest-banner-label">Latest Post</span>
+      <span class="latest-banner-title">{{ latest.title | escape }}</span>
+      <span class="latest-banner-meta">{{ latest.date | date: "%B %-d, %Y" }}{% if latest.category %} &middot; {{ latest.category | escape }}{% endif %}</span>
+    </span>
+    <span class="latest-banner-cta">Read &rarr;</span>
+  </a>
+  {%- endif %}
+
 
 <!-- HERO -->
 <section class="hero">
@@ -840,17 +969,7 @@
         </div>
       </div>
       <div class="fade-in" style="animation-delay: 0.15s">
-        <div style="margin-bottom: 2rem;">
-          <img src="/assets/images/michigan-quality-hero-newspaper.JPG"
-               width="2000" height="1080" loading="lazy" decoding="async"
-               alt="Lansing State Journal, August 30 1999 — John Belen named Michigan Quality Hero"
-               style="width: 100%; border-radius: 6px; box-shadow: 0 12px 40px rgba(15,30,46,0.18); border: 1px solid var(--cream-mid);">
-          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.75rem; font-style: italic; line-height: 1.5;">
-            Lansing State Journal &mdash; Business People &mdash; August 30, 1999.<br>
-            &ldquo;John Belen of Williams BMW Subaru named Quality Hero by the Michigan Quality Council.&rdquo;
-          </p>
-        </div>
-        <div class="section-label" style="margin-top: 2rem;">Specialties</div>
+        <div class="section-label">Specialties</div>
         <ul class="skills-list" style="margin-top: 1rem;">
           <li>CDK / DMS Fixed Operations configuration and optimization</li>
           <li>Empathic listening — actually hearing what clients need</li>
@@ -864,6 +983,27 @@
         </ul>
       </div>
     </div>
+
+      <!-- The clipping is a 2000px-wide newspaper page. In the 410px sidebar
+           it sat in, the newsprint was ~2px tall and unreadable. It gets the
+           full section width here, and links to the full-size file so it can
+           actually be read. height:auto is REQUIRED — the width/height attrs
+           are for aspect-ratio reservation only; without it the fixed height
+           fights width:100% and stretches the image vertically. -->
+      <figure class="clipping">
+        <a href="/assets/images/michigan-quality-hero-newspaper.JPG"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Open the full-size newspaper clipping in a new tab">
+          <img src="/assets/images/michigan-quality-hero-newspaper.JPG"
+               width="2000" height="1080" loading="lazy" decoding="async"
+               alt="Lansing State Journal &ldquo;Business People&rdquo; page, August 30 1999. Under Honors: &ldquo;Kevin Voss of Voyager Information Networks and John Belen of Williams BMW Subaru have been named Quality Heroes by the Michigan Quality Council.&rdquo;">
+        </a>
+        <figcaption>
+          Lansing State Journal &mdash; Business People &mdash; August 30, 1999.<br>
+          &ldquo;John Belen of Williams BMW Subaru named Quality Hero by the Michigan Quality Council.&rdquo;
+          <span class="clipping-zoom">Click to open full size &rarr;</span>
+        </figcaption>
+      </figure>
   </div>
 </section>
 
@@ -949,7 +1089,7 @@
       </div>
       <div class="timeline-item fade-in">
         <div class="timeline-date">2011 – 2013</div>
-        <div class="timeline-role">Training & Implementation Consultant</div>
+        <div class="timeline-role">Training &amp; Implementation Consultant</div>
         <div class="timeline-company">Dataset Inc. · Remote</div>
         <p class="timeline-desc">Independent consultant specializing in ADP/CDK system customization
         for automotive, heavy truck, and equipment dealers. His clients' favorite quote:
@@ -964,7 +1104,7 @@
       </div>
       <div class="timeline-item fade-in">
         <div class="timeline-date">1988 – 2007</div>
-        <div class="timeline-role">Multi-Role Automotive & Technology Leader</div>
+        <div class="timeline-role">Multi-Role Automotive &amp; Technology Leader</div>
         <div class="timeline-company">Williams Autoworld · Michigan</div>
         <p class="timeline-desc">Nearly two decades. One company. Every hat in the building. Over the
         course of 19 years, John served as Technician, Service Manager, Parts Manager, Systems
@@ -1029,8 +1169,8 @@
       <article class="blog-card fade-in" style="background: var(--white); border-radius: 8px; overflow: hidden; border: 1px solid rgba(15,30,46,0.08); transition: transform 0.2s, box-shadow 0.2s;">
         <div style="height: 6px; background: var(--amber);"></div>
         <div style="padding: 1.75rem;">
-          <div style="font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">{{ post.date | date: "%B %Y" }}{% if post.category %} &middot; {{ post.category }}{% endif %}</div>
-          <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.35;">{{ post.title }}</h3>
+          <div style="font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.75rem;">{{ post.date | date: "%B %Y" }}{% if post.category %} &middot; {{ post.category | escape }}{% endif %}</div>
+          <h3 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.75rem; line-height: 1.35;">{{ post.title | escape }}</h3>
           <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem;">{{ post.excerpt | strip_html | truncate: 140 }}</p>
           <a href="{{ post.url | relative_url }}" style="font-size: 0.82rem; font-weight: 500; color: var(--navy); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid var(--amber); padding-bottom: 2px;">Read More →</a>
         </div>

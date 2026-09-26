@@ -42,10 +42,10 @@ description: "Thoughts from the field. 25+ years of dealerships, technology, tea
     <a class="post-entry" href="{{ post.url | relative_url }}">
       <div>
         <div class="post-entry-date">{{ post.date | date: "%b %-d, %Y" }}</div>
-        {% if post.category %}<div class="post-entry-category">{{ post.category }}</div>{% endif %}
+        {% if post.category %}<div class="post-entry-category">{{ post.category | escape }}</div>{% endif %}
       </div>
       <div>
-        <h2 class="post-entry-title">{{ post.title }}</h2>
+        <h2 class="post-entry-title">{{ post.title | escape }}</h2>
         {% if post.excerpt %}
         <div class="post-entry-excerpt">{{ post.excerpt | strip_html | truncate: 180 }}</div>
         {% endif %}
