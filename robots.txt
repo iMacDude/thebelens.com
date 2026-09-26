@@ -66,6 +66,12 @@ Disallow: /
 User-agent: Amazonbot
 Disallow: /
 
+# NOTE: these two are Meta's AI-TRAINING crawlers. They are NOT the
+# scraper that builds link-preview cards — that is `facebookexternalhit`
+# (and `Meta-ExternalFetcher` for user-initiated fetches), both covered by
+# the `User-agent: *  Allow: /` rule at the bottom and deliberately left
+# allowed. Blocking those would break the preview card on every post
+# shared to Facebook or Instagram. Do not "tidy" them into this section.
 User-agent: Meta-ExternalAgent
 Disallow: /
 
