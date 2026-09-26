@@ -1,11 +1,17 @@
 <!-- _includes/head.html -->
 <!-- Loaded by every page. Add site-wide <head> content here. -->
 
-<!-- SEO — jekyll-seo-tag handles title, description, og:, twitter: cards -->
-{% seo %}
+<!-- SEO — jekyll-seo-tag handles description, canonical, og:, twitter:, JSON-LD.
+     title=false: each page writes its own title element with the em-dash
+     house style, so seo-tag must NOT emit a second one. Two title elements
+     is invalid HTML. -->
+{% seo title=false %}
 
-<!-- Canonical URL -->
-<link rel="canonical" href="{{ page.url | absolute_url }}">
+<!-- NO hand-rolled canonical here — the seo tag above already emits one.
+     Two canonical links is a self-conflicting signal to crawlers.
+     WARNING: never put a Liquid tag in an HTML comment. Liquid runs before
+     HTML parsing, so it executes anyway — doing that here emitted the whole
+     SEO block three times. -->
 
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">

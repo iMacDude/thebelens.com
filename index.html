@@ -711,6 +711,7 @@
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- NAV -->
 <nav>
@@ -729,12 +730,14 @@
   </ul>
 </nav>
 
+<main id="main">
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner" style="display: grid; grid-template-columns: 340px 1fr; gap: 5rem; align-items: center; max-width: 1100px;">
     <div class="hero-photo fade-in" style="position: relative; z-index: 1;">
       <div style="border-radius: 12px; overflow: hidden; border: 3px solid rgba(200,135,42,0.3); box-shadow: 0 32px 80px rgba(0,0,0,0.5);">
-        <img src="john-belen.jpg" alt="John Belen" style="width: 100%; display: block; object-fit: cover;">
+        <img src="/john-belen.jpg" alt="John Belen" width="1024" height="1536" fetchpriority="high" decoding="async" style="width: 100%; height: auto; display: block; object-fit: cover;">
       </div>
       <div style="position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); background: var(--amber); color: var(--navy); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 20px; border-radius: 100px; white-space: nowrap;">
         CDK Jedi Master
@@ -830,7 +833,7 @@
           <div class="award-title">Michigan Quality Hero &mdash; August 1999</div>
           <p>Presented by the Michigan Quality Council for outstanding customer service.
           As seen in the Lansing State Journal, August 30, 1999. &nbsp;
-          <a href="/assets/images/michigan-quality-hero-certificate.pdf" target="_blank"
+          <a href="/assets/images/michigan-quality-hero-certificate.pdf" target="_blank" rel="noopener noreferrer"
              style="color: var(--amber-light); text-decoration: none; border-bottom: 1px solid rgba(200,135,42,0.4); padding-bottom: 1px;">
             View Certificate &rarr;
           </a></p>
@@ -839,6 +842,7 @@
       <div class="fade-in" style="animation-delay: 0.15s">
         <div style="margin-bottom: 2rem;">
           <img src="/assets/images/michigan-quality-hero-newspaper.JPG"
+               width="2000" height="1080" loading="lazy" decoding="async"
                alt="Lansing State Journal, August 30 1999 — John Belen named Michigan Quality Hero"
                style="width: 100%; border-radius: 6px; box-shadow: 0 12px 40px rgba(15,30,46,0.18); border: 1px solid var(--cream-mid);">
           <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.75rem; font-style: italic; line-height: 1.5;">
@@ -1122,6 +1126,8 @@
 </section>
 
 <!-- FOOTER -->
+</main>
+
 <footer>
   <p>
     &copy; 2026 The Belens · Cape Coral, Florida ·

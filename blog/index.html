@@ -1,6 +1,7 @@
 ---
 layout: null
 title: Blog — The Belens
+description: "Thoughts from the field. 25+ years of dealerships, technology, teaching, and the occasional hard-won lesson."
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@ title: Blog — The Belens
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog — The Belens</title>
-<meta name="description" content="Thoughts from the field. 25+ years of dealerships, technology, teaching, and the occasional hard-won lesson.">
+<!-- description: set in front matter above, emitted by the seo tag -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -16,11 +17,14 @@ title: Blog — The Belens
 {% include head.html %}
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <nav>
   <a href="/" class="nav-logo">John<span> Belen</span></a>
   <a href="/" class="nav-tag">← Home</a>
 </nav>
+
+<main id="main">
 
 <div class="page-hero">
   <div class="page-hero-inner">
@@ -41,7 +45,7 @@ title: Blog — The Belens
         {% if post.category %}<div class="post-entry-category">{{ post.category }}</div>{% endif %}
       </div>
       <div>
-        <div class="post-entry-title">{{ post.title }}</div>
+        <h2 class="post-entry-title">{{ post.title }}</h2>
         {% if post.excerpt %}
         <div class="post-entry-excerpt">{{ post.excerpt | strip_html | truncate: 180 }}</div>
         {% endif %}
@@ -51,6 +55,8 @@ title: Blog — The Belens
     {% endfor %}
   {% endif %}
 </div>
+
+</main>
 
 <footer>
   <p>

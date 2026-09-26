@@ -206,6 +206,9 @@ footer a:hover { color: var(--amber-light); }
 }
 
 .post-entry-title {
+  /* This is an <h2>. Browsers give headings a default margin-top that the
+     previous <div> did not have — pin it or the listing spacing shifts. */
+  margin-top: 0;
   font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(1.2rem, 2.5vw, 1.55rem);
   font-weight: 700;
@@ -395,4 +398,53 @@ footer a:hover { color: var(--amber-light); }
   .post-body { padding: 3rem 1.5rem 3rem; }
   .post-author-card { padding: 0 1.5rem; }
   .post-footer { padding: 2rem 1.5rem 3rem; }
+}
+
+
+/* ── Skip link ──────────────────────────────────────────────────────────
+   Keyboard users land on <body> and would otherwise have to tab through the
+   whole nav on every page. This is off-screen until focused, then visible.
+   WCAG 2.4.1 (Bypass Blocks). Do not use display:none — that removes it
+   from the tab order entirely and defeats the purpose. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  padding: 12px 22px;
+  background: var(--navy, #0f1e2e);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 6px 0;
+}
+.skip-link:focus {
+  left: 0;
+  outline: 3px solid var(--amber, #c8872a);
+  outline-offset: 2px;
+}
+
+/* Visible focus ring for keyboard users site-wide. :focus-visible keeps it
+   off for mouse clicks, so the design is untouched for pointer users. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--amber, #c8872a);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Respect the OS "reduce motion" setting — the fade-in animations can
+   trigger vestibular discomfort. WCAG 2.3.3. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-in { opacity: 1 !important; transform: none !important; }
 }

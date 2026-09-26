@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ page.title }} — The Belens</title>
-<meta name="description" content="{{ page.excerpt | strip_html | truncate: 160 }}">
+<!-- description: emitted by the seo tag in head.html, from page.excerpt.
+     Do NOT write a Liquid tag inside an HTML comment — Jekyll runs Liquid
+     before HTML parsing, so a commented-out tag still executes. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,11 +14,14 @@
 {% include head.html %}
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <nav>
   <a href="/" class="nav-logo">John<span> Belen</span></a>
   <a href="/blog/" class="nav-tag">← All Posts</a>
 </nav>
+
+<main id="main">
 
 <div class="page-hero post-hero">
   <div class="page-hero-inner">
@@ -33,7 +38,7 @@
 
 {% if page.image %}
 <div class="post-image">
-  <img src="{{ page.image }}" alt="{{ page.image_alt }}" style="width:100%; max-height:480px; object-fit:cover; display:block;">
+  <img src="{{ page.image | relative_url }}" alt="{{ page.image_alt }}" fetchpriority="high" decoding="async" style="width:100%; max-height:480px; object-fit:cover; display:block;">
 </div>
 {% endif %}
 
@@ -52,6 +57,8 @@
   <a href="/blog/">← All Posts</a>
   <a href="/">thebelens.com</a>
 </div>
+
+</main>
 
 <footer>
   <p>

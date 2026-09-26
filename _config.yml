@@ -17,7 +17,9 @@ lang: en_US
 # Author — used by jekyll-seo-tag for structured data
 author:
   name: John Belen
-  email: john@thebelens.com
+  # NO email key here on purpose. jekyll-feed copies site.author.email into
+  # feed.xml as <author><email>, and RSS feeds are a standard harvest target
+  # for address scrapers. Contact goes through the Formspree form instead.
   twitter: ""
 
 # Social links — used by jekyll-seo-tag
@@ -27,9 +29,11 @@ social:
     - https://www.linkedin.com/in/johnbelen
     - https://thebelens.com
 
-# Open Graph image — shown when someone shares your site on social
-# Drop a 1200x630px image at this path
-logo: /assets/images/og-image.jpg
+# Open Graph image — shown when someone shares the site on social.
+# DISABLED until a real file exists. /assets/images/og-image.jpg was
+# referenced here but never created, so this emitted a 404 URL into the
+# JSON-LD publisher logo. Create a 1200x630 card, then uncomment.
+# logo: /assets/images/og-image.jpg
 
 # Google Search Console verification
 # After claiming in GSC, paste your verification meta tag content here:
@@ -63,7 +67,11 @@ defaults:
     values:
       layout: post
       author: John Belen
-      image: /assets/images/og-image.jpg
+      # NO default image here. _layouts/post.html guards on page.image being
+      # SET, not on the file resolving — so a default pointing at a missing
+      # file rendered a broken hero image on every post without its own art.
+      # It did exactly that on three live posts. A post with no image should
+      # simply have no hero. Set `image:` per post instead.
 
 # Exclude from build
 exclude:
