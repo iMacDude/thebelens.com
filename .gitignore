@@ -8,3 +8,11 @@ _site/
 # Bundler
 .bundle/
 vendor/
+
+# Working source material — NEVER published.
+# 20 years of personal Facebook posts live in _content/facebook-processed/.
+# The leading underscore also makes Jekyll skip it; this is the second lock.
+_content/
+
+# Bulk archives, if one ever ends up nested here by mistake
+historic-archive/

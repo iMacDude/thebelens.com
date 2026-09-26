@@ -74,3 +74,7 @@ exclude:
   - CLAUDE.md
   - .claude
   - extract_blog.py
+  # Working source material. Underscore dirs are skipped by default;
+  # naming it here too makes the intent explicit and survives a rename.
+  - _content
+  - historic-archive
