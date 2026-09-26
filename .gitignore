@@ -16,3 +16,8 @@ _content/
 
 # Bulk archives, if one ever ends up nested here by mistake
 historic-archive/
+
+# Draft posts: bodies stay local (this repo is PUBLIC).
+# The README is committed so the folder is self-documenting.
+_drafts/*
+!_drafts/README.md
