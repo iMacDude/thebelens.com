@@ -30,25 +30,27 @@ And we laughed. All three of us. Because what else do you do?
 
 I've thought about why this keeps happening. Why we seem to find ourselves, again and again, on the receiving end of spilled drinks and wayward hoses and orders that went to the wrong table and all the other small human errors that populate a life lived out in the world among people.
 
-Part of it is simple math — Kelley and I go out a lot. We love it. We love the people, we love the ritual of it, we love sitting somewhere with a good drink and watching the world move around us. If you're somewhere often enough, you're going to be there when things go wrong.
+Part of it is simple math — Kelley and I go out a lot. We love it. We have great friends, we love the diversity of people we meet, we love the ritual of it, we love sitting somewhere with a good drink and watching the world move around us. If you're somewhere often enough, you're going to be there when things go wrong.
 
 But I don't think that's all of it.
 
 I think it's that we both know — deeply, practically, from a lifetime of evidence — how fragile and error-prone the whole human enterprise actually is. We've both made mistakes. We've both had the thing go wrong on our watch. We've both been the person standing there hoping that whoever's on the other end of our error is going to be kind about it.
 
-And so when it's our turn to be on that other end, it doesn't feel like a grievance. It feels like Tuesday. It feels like *of course this happened, things happen, let's laugh about it and move on.*
+And so when it's our turn to be on that other end, it doesn't feel like a grievance. It feels like Tuesday. It feels like *of course this happened, things happen, let's laugh about it and move on.* Everything is going to be ok.
 
 ---
 
-What Kelley and I are not — and I think this matters — is uptight.
+In life, we are all broken and fallible, but in the book of Matthew 7:3 it asks “Why do you see the speck in your neighbor’s eye but do not notice the log in your own eye?”
 
-We are not entitled. We are not pretentious. We don't arrive anywhere with an expectation bar set so high that reality can only disappoint us. We arrive because we genuinely want to be there. We stay because we love the people. We come back because something about the place — or more often, the person — made us feel welcome.
+The world around us is broken, and still beautiful. All of us have struggles and we don’t know about everything each other is going through. The best that we can hope, is that people we encounter won’t be mean, cruel, pretentious, entitled, or worse still, unforgiving.
+
+We do our best not to arrive anywhere with an expectation bar set so high that reality can only disappoint us. We arrive because we genuinely want to be there. We stay because we love the people. We come back because something about the place — or more often, the person or people — made us feel welcome.
 
 And the beautiful thing that's happened, over years of showing up this way, is that the people have started to feel it.
 
 Our favorite servers know our names. They light up a little when we walk in — not in a performed hospitality way, but in the way a person lights up when they see someone they actually like. We've built something in those places. Not a transaction, not a loyalty program, not an accumulation of points. Something more like friendship.
 
-You don't get that by being the table that sends things back twice and leaves a pointed note on the receipt.
+You don't get that by being the table that sends things back twice and leaves a pointed note on the receipt. When problems occur, it’s a quiet personal conversation, instead of a public display.
 
 ---
 
