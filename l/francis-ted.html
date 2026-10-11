@@ -1,0 +1,38 @@
+---
+permalink: /l/francis-ted/
+sitemap: false
+---
+<!doctype html>
+<meta charset="utf-8">
+<!--
+  Short link: https://thebelens.com/l/francis-ted/  ->  Pope Francis, TED2017.
+
+  WHY A PAGE AND NOT A PLUGIN. jekyll-redirect-from would do this, but it is
+  not in the Gemfile or in _config.yml plugins, and the site is built by
+  .github/workflows/deploy.yml with `bundle exec jekyll build` and
+  bundler-cache. Adding a gem means a Gemfile + Gemfile.lock change on a live
+  site, and a bad lockfile fails the build and stops the deploy. One outbound
+  link does not justify that. This page needs no plugin, no gem and no lockfile
+  churn, and behaves identically.
+
+  WHY A SHORT LINK AT ALL. Used instead of bit.ly: no third-party click
+  tracker between a reader and the destination, and the target stays editable
+  forever -- if TED moves the talk, fix it here and every published reference
+  keeps working. That is the part a shortener cannot give back.
+
+  noindex keeps this out of search results; canonical points crawlers at the
+  real talk so no ranking is attributed here; sitemap:false keeps it out of
+  sitemap.xml. The visible link is the fallback when meta-refresh is blocked.
+-->
+<title>Redirecting to Pope Francis&rsquo;s TED talk</title>
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://www.ted.com/talks/his_holiness_pope_francis_why_the_only_future_worth_building_includes_everyone">
+<meta http-equiv="refresh" content="0; url=https://www.ted.com/talks/his_holiness_pope_francis_why_the_only_future_worth_building_includes_everyone">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         max-width: 34rem; margin: 20vh auto; padding: 0 1rem; line-height: 1.6; }
+</style>
+<p>Taking you to Pope Francis&rsquo;s TED talk,
+   <em>Why the only future worth building includes everyone</em>&hellip;</p>
+<p>If nothing happens,
+   <a href="https://www.ted.com/talks/his_holiness_pope_francis_why_the_only_future_worth_building_includes_everyone">open it on ted.com</a>.</p>
