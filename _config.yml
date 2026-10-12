@@ -82,7 +82,19 @@ exclude:
   - CLAUDE.md
   - .claude
   - extract_blog.py
+  # workers/ is Cloudflare Worker source, not website content. .gitignore
+  # keeps node_modules out of GIT; it does NOT keep it out of the BUILD --
+  # two separate exclusion systems. Without this line Jekyll copied 1,644
+  # files into _site (a 160 MB build) and would have served deploy.sh and
+  # the Worker source at thebelens.com/workers/likes/.
+  - workers
   # Working source material. Underscore dirs are skipped by default;
   # naming it here too makes the intent explicit and survives a rename.
   - _content
   - historic-archive
+
+# Like buttons on posts. OFF until the Cloudflare Worker that backs them is
+# deployed -- see workers/likes/README.md. Flipping this to true before the
+# Worker exists is harmless (the control hides itself when the API does not
+# answer) but it would fire a 404 on every post view, so do it in order.
+likes_enabled: false

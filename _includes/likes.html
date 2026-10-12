@@ -1,0 +1,88 @@
+{%- comment -%}
+  likes.html — the "liked this?" control at the end of a post.
+
+  PROGRESSIVE ENHANCEMENT, AND THE REASON IT MATTERS HERE.
+  The whole block ships `hidden` and is revealed only after the API answers.
+  So with JavaScript off, or the Worker not deployed, or the API unreachable,
+  a reader sees exactly the page they see today — never a dead button or a
+  spinner that spins forever. That is also what makes this safe to commit
+  before the Worker exists, which is the staged rollout: ship the inert half,
+  confirm it is inert, then turn the backend on.
+
+  ZERO PERSONAL DATA, BY DESIGN.
+  Dedup is `localStorage` only. No cookie, no IP hash, no fingerprint, nothing
+  stored about who clicked — so this needs no consent banner and there is no
+  reader data to leak, which is the whole point of not using Disqus. The cost
+  is honest: a determined person can clear storage and like again. For a family
+  blog that is the right trade; the counter is warmth, not an election.
+
+  Same-origin fetch to /api/likes/<slug> — see workers/likes/src/worker.js for
+  why it is on this domain and not a *.workers.dev hostname.
+{%- endcomment -%}
+<div class="post-likes" id="post-likes" hidden>
+  <button type="button" class="post-likes-btn" id="post-likes-btn"
+          aria-pressed="false" aria-label="Like this post">
+    <svg class="post-likes-heart" viewBox="0 0 24 24" width="20" height="20"
+         aria-hidden="true" focusable="false">
+      <path d="M12 20.5s-7.5-4.6-7.5-9.6a4.2 4.2 0 0 1 7.5-2.6 4.2 4.2 0 0 1 7.5 2.6c0 5-7.5 9.6-7.5 9.6z"
+            fill="none" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="post-likes-label" id="post-likes-label">Liked this?</span>
+    <span class="post-likes-count" id="post-likes-count" aria-live="polite"></span>
+  </button>
+</div>
+<script>
+(function () {
+  var slug = {{ page.slug | jsonify }};
+  if (!slug) return;
+
+  var wrap  = document.getElementById('post-likes');
+  var btn   = document.getElementById('post-likes-btn');
+  var label = document.getElementById('post-likes-label');
+  var tally = document.getElementById('post-likes-count');
+  var api   = '/api/likes/' + encodeURIComponent(slug);
+  var key   = 'tb-liked:' + slug;
+
+  // localStorage throws in some privacy modes rather than returning null, so
+  // every access is guarded. A reader with storage blocked still gets a
+  // working button; they just are not remembered.
+  function remembered() {
+    try { return localStorage.getItem(key) === '1'; } catch (e) { return false; }
+  }
+  function remember() {
+    try { localStorage.setItem(key, '1'); } catch (e) { /* no-op */ }
+  }
+
+  function paint(count, liked) {
+    tally.textContent = count > 0 ? count : '';
+    btn.setAttribute('aria-pressed', liked ? 'true' : 'false');
+    wrap.classList.toggle('is-liked', !!liked);
+    label.textContent = liked ? 'Thanks for reading' : 'Liked this?';
+    btn.disabled = !!liked;
+  }
+
+  // Reveal only on a real answer. A failed fetch leaves the block hidden.
+  fetch(api, { headers: { 'accept': 'application/json' } })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (d) {
+      paint(d.count || 0, remembered());
+      wrap.hidden = false;
+    })
+    .catch(function () { /* stays hidden — no broken UI */ });
+
+  btn.addEventListener('click', function () {
+    if (btn.disabled) return;
+    btn.disabled = true;
+    // Optimistic paint, then correct from the POST's own response. KV reads are
+    // eventually consistent, so the write's reply is the authoritative number —
+    // re-reading could hand back the pre-click value for up to a minute.
+    paint((parseInt(tally.textContent, 10) || 0) + 1, true);
+    remember();
+    fetch(api, { method: 'POST', headers: { 'accept': 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (d) { paint(d.count, true); })
+      .catch(function () { /* optimistic number stands; it is cosmetic */ });
+  });
+})();
+</script>

@@ -21,3 +21,11 @@ historic-archive/
 # The README is committed so the folder is self-documenting.
 _drafts/*
 !_drafts/README.md
+
+# Worker tooling (added 2026-10-12 with workers/likes). node_modules must never
+# land in a PUBLIC repo -- it is thousands of files and occasionally ships
+# credentials in a package's own fixtures. .wrangler holds local dev state,
+# including the local KV emulation, which is throwaway.
+workers/*/node_modules/
+workers/*/.wrangler/
+workers/*/.dev.vars

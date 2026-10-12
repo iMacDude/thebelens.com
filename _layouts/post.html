@@ -46,6 +46,15 @@
   {{ content }}
 </div>
 
+{%- comment -%}
+  Gated on `likes_enabled` in _config.yml so the two halves can ship
+  independently -- staged rollout, not a big bang. The Worker goes live first
+  (workers/likes/deploy.sh), then this flag flips. Until then the markup is not
+  emitted at all, so the site makes no request to a path that does not exist
+  and no 404s land in the Cloudflare logs.
+{%- endcomment -%}
+{% if site.likes_enabled %}{% include likes.html %}{% endif %}
+
 <div class="post-author-card">
   <div class="post-author-inner">
     <div class="post-author-name">John Belen</div>

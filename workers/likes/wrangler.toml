@@ -1,0 +1,22 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "thebelens-likes"
+main = "src/worker.js"
+compatibility_date = "2026-05-01"
+
+# account_id is DELIBERATELY ABSENT. This repo is PUBLIC on GitHub, and while an
+# account id is not a credential, it is an identifier that does not need to be
+# in a public file. wrangler reads CLOUDFLARE_ACCOUNT_ID from the environment --
+# deploy.sh sources it from ~/.config/homelab/cloudflare.env (600), the same
+# pattern the homelab uses for the Kuma push tokens and the pool webhook id.
+
+# The route puts this on the site's OWN origin. See the header comment in
+# src/worker.js for why that matters more than it looks.
+[[routes]]
+pattern = "thebelens.com/api/likes/*"
+zone_name = "thebelens.com"
+
+# id is filled in by deploy.sh from the environment too, for the same reason.
+# `wrangler kv namespace create LIKES` prints it once at creation.
+[[kv_namespaces]]
+binding = "LIKES"
+id = "PLACEHOLDER_SET_BY_DEPLOY"

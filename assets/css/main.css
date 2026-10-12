@@ -448,3 +448,82 @@ select:focus-visible {
   }
   .fade-in { opacity: 1 !important; transform: none !important; }
 }
+
+/* ── POST LIKES ──
+   Borrows .post-footer's idiom deliberately: same 720px measure, same
+   --cream-mid hairline, same uppercase letterspaced small type, same amber
+   hover. It should read as part of the furniture, not a bolted-on widget.
+   The block ships `hidden` and is revealed by JS only when the API answers —
+   see _includes/likes.html. */
+.post-likes {
+  max-width: 720px;
+  margin: 2.5rem auto 0;
+  /* Bottom padding is load-bearing: .post-author-card is `margin: 0 auto 1rem`
+     with NO top margin, so without this the card butts straight into the
+     button. Caught by looking at the rendered page, not by reading the rules. */
+  padding: 2rem 2.5rem 2.75rem;
+  border-top: 1px solid var(--cream-mid);
+  display: flex;
+  justify-content: center;
+}
+.post-likes[hidden] { display: none; }
+.post-likes-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.25rem;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.post-likes-btn:hover:not(:disabled) {
+  color: var(--amber);
+  border-color: var(--brass-light);
+  background: var(--cream);
+}
+/* Keyboard focus must stay visible — the button is the only control here. */
+.post-likes-btn:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+.post-likes-heart {
+  flex: none;
+  transition: fill 0.25s, stroke 0.2s, transform 0.25s;
+}
+.post-likes-count {
+  font-variant-numeric: tabular-nums;  /* so the number does not jiggle */
+  color: var(--brass);
+}
+.post-likes-count:empty { display: none; }
+
+/* Liked: the heart fills, the button goes quiet and stops inviting a click. */
+.post-likes.is-liked .post-likes-btn {
+  color: var(--mahogany-mid);
+  border-color: var(--cream-mid);
+  background: var(--cream);
+  cursor: default;
+}
+.post-likes.is-liked .post-likes-heart path {
+  fill: var(--amber);
+  stroke: var(--amber);
+}
+.post-likes.is-liked .post-likes-heart { transform: scale(1.08); }
+
+/* Respect a reader who has asked for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .post-likes-heart,
+  .post-likes-btn { transition: none; }
+  .post-likes.is-liked .post-likes-heart { transform: none; }
+}
+
+@media (max-width: 768px) {
+  .post-likes { padding: 1.75rem 1.5rem 2.25rem; }
+}
