@@ -9,7 +9,12 @@ reading_time: 5
 # count is 0, converted from the PNG master kept in _content/.
 # /l/francis-ted/ is a self-hosted redirect page (see l/francis-ted.html).
 # Destination: https://www.ted.com/talks/his_holiness_pope_francis_why_the_only_future_worth_building_includes_everyone
-excerpt: "I chatted with my son, yesterday, and we had a good laugh about a great memory."
+# excerpt 2026-10-12: replaced a placeholder that merely repeated the opening
+# line (16 words). The other five posts run 43-49 words and open on the first
+# sentence then set the scene, which is the shape below. index.html truncates
+# to 140 chars on the card, so the front half carries it; the seo tag emits the
+# whole thing as the meta description.
+excerpt: "I chatted with my son, yesterday, and we had a good laugh about a great memory. He was maybe 4 or 5. There was a firehouse, a bench, an unforgiving concrete sidewalk, and a pack of Famous Amos cookies in my jacket pocket."
 ---
 
 I chatted with my son, yesterday, and we had a good laugh about a great memory.
