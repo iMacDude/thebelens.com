@@ -24,8 +24,8 @@ trap cleanup EXIT INT TERM   # global, not a `local` -- see the EXIT-trap gotcha
 ready=0
 for i in $(seq 1 60); do
     # Identity: only OUR worker returns this contract for this path.
-    if curl -s --max-time 2 "http://127.0.0.1:$PORT/api/likes/warmup" 2>/dev/null \
-         | grep -q '"slug":"warmup"'; then ready=1; break; fi
+    if curl -s --max-time 2 "http://127.0.0.1:$PORT/api/likes/tb/warmup" 2>/dev/null \
+         | grep -q '"site":"tb","slug":"warmup"'; then ready=1; break; fi
     sleep 1
 done
 if [ "$ready" != "1" ]; then

@@ -1,48 +1,78 @@
 /**
- * likes — a like counter for thebelens.com, running on Cloudflare Workers + KV.
+ * likes — one like counter serving BOTH of John's sites.
  *
- * WHY A WORKER ROUTE AND NOT *.workers.dev
- * This is bound to thebelens.com/api/likes/* on the zone, so the browser calls
- * the SAME ORIGIN the page came from. That buys three things:
- *   1. No CORS preflight, no third-party hostname in the page.
- *   2. It cannot be blocked by John's own gateway. The gateway nulls tracker
- *      domains to 0.0.0.0 -- `static.cloudflareinsights.com` among them -- so
- *      anything served from a Cloudflare-owned hostname risks being invisible
- *      from inside the house, which is the documented reason Cloudflare Web
- *      Analytics would undercount here. The site's own domain cannot be.
- *   3. No new DNS record to add or verify.
+ *   thebelens.com         -> /api/likes/tb/<slug>    (same origin)
+ *   footprintsoffrank.com -> /api/likes/fof/<slug>   (cross origin)
+ *
+ * WHY ONE WORKER AND NOT TWO
+ * footprintsoffrank.com has NO Cloudflare zone -- GoDaddy nameservers pointing
+ * straight at GitHub Pages -- so a Worker route cannot be bound to it at all.
+ * The alternatives were migrating Frank's DNS (which would move the Zoho MX
+ * records, putting email in the blast radius of a like button) or giving Frank
+ * a *.workers.dev hostname (a Cloudflare-owned domain in the page, the exact
+ * thing the same-origin design exists to avoid, since the house gateway nulls
+ * such domains to 0.0.0.0). So Frank borrows this one cross-origin.
+ *
+ * THE SITE CODE IS IN THE PATH, NOT INFERRED FROM THE ORIGIN HEADER.
+ * Two independent Jekyll sites can absolutely have the same slug, and a
+ * collision would silently merge two unrelated posts into one counter -- a bug
+ * that looks like "the number is wrong" and is unrecoverable once mixed. The
+ * path carries the site explicitly so the key is unambiguous and testable, and
+ * Origin is used only for access control, never for routing. Origin can be
+ * absent or spoofed; the path cannot be ambiguous.
+ *
+ * WHY THIS IS ON thebelens.com/api/... AND NOT *.workers.dev
+ * Same origin for the main site: no CORS there, no third-party hostname, and
+ * crucially it cannot be blocked by the house gateway, which nulls tracker
+ * domains to 0.0.0.0 -- `static.cloudflareinsights.com` among them. That is the
+ * documented reason Cloudflare Web Analytics undercounts here.
  *
  * THE CACHE TRAP, WHICH IS THE ONE THAT WOULD ACTUALLY BREAK THIS
- * The zone serves `cache-control: max-age=14400`, and Cloudflare has already
- * cached a 404 on this domain for four hours once. A cached like-count is worse
- * than a wrong one: it freezes the same stale number for every visitor and
- * looks like the counter is broken. So EVERY response here -- including the
- * errors -- carries `Cache-Control: no-store`, and the deploy check reads
- * `cf-cache-status` to confirm it rather than trusting it.
+ * The zone serves `cache-control: max-age=14400` and has cached a 404 on this
+ * domain for four hours once. A cached like-count is worse than a wrong one: it
+ * freezes the same stale number for every visitor and reads as a broken
+ * counter. EVERY response here, errors included, is `no-store`, and deploy.sh
+ * reads `cf-cache-status` off the live URL rather than trusting it.
  *
- * KV IS NOT ATOMIC, AND THAT IS A DELIBERATE ACCEPTED COST
- * There is no increment operation; this is a read-modify-write, so two likes
- * landing in the same few milliseconds can count as one. Durable Objects are
- * the strictly-consistent fix and require the paid plan. At this site's traffic
- * the collision window is negligible, and the failure mode is a counter that is
- * low by one -- not a broken page or lost data. Stated rather than hidden.
- *
- * KV is also eventually consistent on READ (up to ~60s between colos), which is
- * why POST returns the new count in its own response body: the page shows the
- * authoritative number it just wrote instead of re-reading a stale one.
+ * KV IS NOT ATOMIC -- A DELIBERATE, ACCEPTED COST
+ * No increment operation exists, so this is a read-modify-write and two likes
+ * within a few milliseconds can count as one. Durable Objects are the strictly
+ * consistent fix and need the paid plan. The failure mode is a count low by
+ * one, not a broken page. KV reads are also eventually consistent (~60s), which
+ * is why POST returns the new count in its own body: the page shows the number
+ * it just wrote rather than re-reading a stale one.
  */
 
 const SLUG_RE = /^[a-z0-9][a-z0-9-]{0,79}$/;
-const ALLOWED_ORIGINS = ["https://thebelens.com", "https://www.thebelens.com"];
 
-/** Never cacheable, by anything, ever. See the cache trap above. */
-function json(body, status = 200) {
-    return new Response(JSON.stringify(body), {
+/** Site code -> the origins allowed to write for it. */
+const SITES = {
+    tb:  ["https://thebelens.com", "https://www.thebelens.com"],
+    fof: ["https://footprintsoffrank.com", "https://www.footprintsoffrank.com"],
+};
+const ALL_ORIGINS = Object.values(SITES).flat();
+
+function corsHeaders(origin) {
+    // Echo the specific origin rather than "*": the set is small, known, and
+    // entirely John's. Vary:Origin so no cache can ever mix two origins'
+    // responses -- belt and braces next to no-store.
+    if (!origin || !ALL_ORIGINS.includes(origin)) return { vary: "Origin" };
+    return {
+        "access-control-allow-origin": origin,
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "access-control-max-age": "86400",
+        vary: "Origin",
+    };
+}
+
+function json(body, status, origin) {
+    return new Response(status === 204 ? null : JSON.stringify(body), {
         status,
         headers: {
-            "content-type": "application/json; charset=utf-8",
+            ...(status === 204 ? {} : { "content-type": "application/json; charset=utf-8" }),
             "cache-control": "no-store, no-cache, must-revalidate, max-age=0",
             "x-robots-tag": "noindex",
+            ...corsHeaders(origin),
         },
     });
 }
@@ -50,37 +80,49 @@ function json(body, status = 200) {
 export default {
     async fetch(request, env) {
         const url = new URL(request.url);
+        const origin = request.headers.get("Origin");
 
-        // /api/likes/<slug> -- anything else is not ours.
-        const m = url.pathname.match(/^\/api\/likes\/([^/]+)\/?$/);
-        if (!m) return json({ error: "not found" }, 404);
+        // /api/likes/<site>/<slug> -- exactly two segments, nothing else.
+        const m = url.pathname.match(/^\/api\/likes\/([a-z]{2,8})\/([^/]+)\/?$/);
+        if (!m) return json({ error: "not found" }, 404, origin);
 
-        const slug = decodeURIComponent(m[1]).toLowerCase();
+        const site = m[1];
+        const slug = decodeURIComponent(m[2]).toLowerCase();
+        if (!Object.prototype.hasOwnProperty.call(SITES, site)) {
+            return json({ error: "unknown site" }, 404, origin);
+        }
         // Strict allowlist: KV keys are created on first write, so an unchecked
-        // slug lets anyone fill the namespace with junk keys and burn the daily
-        // write quota. A generated post manifest would be stricter still -- see
-        // the README -- but shape + length is proportionate and has no build step.
-        if (!SLUG_RE.test(slug)) return json({ error: "bad slug" }, 400);
+        // slug lets anyone fill the namespace with junk and burn the daily
+        // write quota.
+        if (!SLUG_RE.test(slug)) return json({ error: "bad slug" }, 400, origin);
+
+        const key = `${site}:${slug}`;
+
+        // Browsers will not preflight these (GET/POST carrying only Accept,
+        // which is CORS-safelisted), but answer OPTIONS correctly anyway so a
+        // future header addition does not quietly break Frank's site.
+        if (request.method === "OPTIONS") return json(null, 204, origin);
 
         if (request.method === "GET") {
-            const raw = await env.LIKES.get(slug);
-            return json({ slug, count: Number(raw) || 0 });
+            const raw = await env.LIKES.get(key);
+            return json({ site, slug, count: Number(raw) || 0 }, 200, origin);
         }
 
         if (request.method === "POST") {
-            // Same-origin only. This is not a security control -- there is
-            // nothing to protect and no session to forge -- it just stops the
-            // button being driven from someone else's page by accident.
-            const origin = request.headers.get("Origin");
-            if (origin && !ALLOWED_ORIGINS.includes(origin)) {
-                return json({ error: "origin not allowed" }, 403);
+            // Writes require a known origin. Not a security control in any
+            // serious sense -- there is no session to forge and nothing to
+            // protect -- it just stops the button being driven from someone
+            // else's page. A direct curl (no Origin) is still allowed, because
+            // refusing it would break the deploy self-test for no benefit.
+            if (origin && !ALL_ORIGINS.includes(origin)) {
+                return json({ error: "origin not allowed" }, 403, origin);
             }
-            const current = Number(await env.LIKES.get(slug)) || 0;
+            const current = Number(await env.LIKES.get(key)) || 0;
             const count = current + 1;
-            await env.LIKES.put(slug, String(count));
-            return json({ slug, count, liked: true });
+            await env.LIKES.put(key, String(count));
+            return json({ site, slug, count, liked: true }, 200, origin);
         }
 
-        return json({ error: "method not allowed" }, 405);
+        return json({ error: "method not allowed" }, 405, origin);
     },
 };

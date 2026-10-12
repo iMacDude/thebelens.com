@@ -36,13 +36,19 @@
 (function () {
   var slug = {{ page.slug | jsonify }};
   if (!slug) return;
+  // API base and site code come from _config.yml so this file is identical on
+  // both sites. thebelens.com uses a relative path (same origin, no CORS);
+  // footprintsoffrank.com points at thebelens.com absolutely, because Frank's
+  // domain has no Cloudflare zone and cannot host a Worker route at all.
+  var apiBase = {{ site.likes_api | default: '/api/likes' | jsonify }};
+  var siteCode = {{ site.likes_site | default: 'tb' | jsonify }};
 
   var wrap  = document.getElementById('post-likes');
   var btn   = document.getElementById('post-likes-btn');
   var label = document.getElementById('post-likes-label');
   var tally = document.getElementById('post-likes-count');
-  var api   = '/api/likes/' + encodeURIComponent(slug);
-  var key   = 'tb-liked:' + slug;
+  var api   = apiBase + '/' + siteCode + '/' + encodeURIComponent(slug);
+  var key   = 'liked:' + siteCode + ':' + slug;
 
   // localStorage throws in some privacy modes rather than returning null, so
   // every access is guarded. A reader with storage blocked still gets a
@@ -63,7 +69,7 @@
   }
 
   // Reveal only on a real answer. A failed fetch leaves the block hidden.
-  fetch(api, { headers: { 'accept': 'application/json' } })
+  fetch(api, { credentials: 'omit', headers: { 'accept': 'application/json' } })
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function (d) {
       paint(d.count || 0, remembered());
@@ -79,7 +85,7 @@
     // re-reading could hand back the pre-click value for up to a minute.
     paint((parseInt(tally.textContent, 10) || 0) + 1, true);
     remember();
-    fetch(api, { method: 'POST', headers: { 'accept': 'application/json' } })
+    fetch(api, { method: 'POST', credentials: 'omit', headers: { 'accept': 'application/json' } })
       .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
       .then(function (d) { paint(d.count, true); })
       .catch(function () { /* optimistic number stands; it is cosmetic */ });

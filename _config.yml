@@ -98,3 +98,7 @@ exclude:
 # Worker exists is harmless (the control hides itself when the API does not
 # answer) but it would fire a 404 on every post view, so do it in order.
 likes_enabled: false
+# Same origin here -- thebelens.com IS the Cloudflare zone the Worker is routed
+# on, so no CORS and no third-party hostname in the page.
+likes_api: "/api/likes"
+likes_site: "tb"

@@ -1,6 +1,27 @@
-# likes — a like counter for thebelens.com
+# likes — one like counter for BOTH sites
 
-A Cloudflare Worker plus a KV namespace, serving `thebelens.com/api/likes/<slug>`.
+A Cloudflare Worker plus a KV namespace, serving:
+
+| Site | Calls | Origin |
+|---|---|---|
+| `thebelens.com` | `/api/likes/tb/<slug>` | same origin |
+| `footprintsoffrank.com` | `https://thebelens.com/api/likes/fof/<slug>` | cross origin |
+
+**Frank borrows this Worker because his domain cannot host one.**
+footprintsoffrank.com runs on GoDaddy nameservers pointing straight at GitHub
+Pages — there is no Cloudflare zone, so no Worker route can bind to it at all.
+The alternatives were migrating that zone's DNS, which would move the Zoho MX
+records and put Frank's email in the blast radius of a like button, or giving
+Frank a `*.workers.dev` hostname, which is a Cloudflare-owned domain in the page
+and exactly what the same-origin design exists to avoid. Borrowing is the
+smallest of the three.
+
+**The site code is in the PATH, not inferred from the `Origin` header.** Two
+independent Jekyll sites can have the same slug; without the prefix, two
+unrelated posts would silently share one counter and the mixing could not be
+undone. KV keys are `tb:<slug>` and `fof:<slug>`. `Origin` is used only for
+access control, never for routing — it can be absent or spoofed, but a path
+cannot be ambiguous.
 No third-party service, no ads, no tracker, and **no personal data at all**.
 
 | | |
@@ -110,6 +131,17 @@ The repo deliberately holds **no credentials** and no account id; it is public.
    that does not exist yet.
 
 ## Testing locally
+
+**`wrangler dev` rewrites the routed hostname in outgoing headers, and it is a
+blind string substitution.** With `thebelens.com/api/likes/*` configured as the
+route, a response echoing `https://thebelens.com` arrives as
+`https://127.0.0.1:<port>` — and `https://www.thebelens.com` arrives as the
+nonsense `https://www.127.0.0.1:<port>`, which is the proof that it is textual
+rather than URL-aware. It applies on the `/fof/` path too, so it is keyed on the
+route's `zone_name` and has nothing to do with the Worker, whose `tb` and `fof`
+paths are the same code. This produced one confident false failure of the CORS
+test. The test is now rewrite-aware; **Frank's CORS can only be truly verified
+against the deployed Worker**, which is why `deploy.sh` checks it.
 
 ```sh
 npm test

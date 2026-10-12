@@ -79,7 +79,8 @@ echo "  --- verifying against the LIVE url (not assuming) ---"
 # Worker route is served before the CDN cache, which is exactly what the
 # cf-cache-status check below confirms rather than takes on faith.
 SLUG="deploy-selftest"
-URL="https://thebelens.com/api/likes/$SLUG"
+URL="https://thebelens.com/api/likes/tb/$SLUG"
+FOF="https://footprintsoffrank.com"
 
 hdr=$(curl -sS -D - -o /tmp/.likes-body.$$ --max-time 15 "$URL" 2>/dev/null | tr -d '\r')
 body=$(cat /tmp/.likes-body.$$ 2>/dev/null); rm -f /tmp/.likes-body.$$
@@ -87,7 +88,7 @@ code=$(printf '%s' "$hdr" | awk 'NR==1{print $2}')
 cc=$(printf '%s'  "$hdr" | grep -i '^cache-control:' | head -1 | cut -d' ' -f2-)
 cfs=$(printf '%s' "$hdr" | grep -i '^cf-cache-status:' | head -1 | cut -d' ' -f2-)
 
-printf '    GET  %-28s http=%s\n' "/api/likes/$SLUG" "${code:-none}"
+printf '    GET  %-28s http=%s\n' "/api/likes/tb/$SLUG" "${code:-none}"
 printf '    cache-control:    %s\n' "${cc:-ABSENT}"
 printf '    cf-cache-status:  %s\n' "${cfs:-absent (good: the CDN is not caching it)}"
 printf '    body:             %s\n' "${body:-none}"
@@ -104,11 +105,43 @@ printf '    POST increments:  %s -> %s\n' "${before:-?}" "${after:-?}"
 [ -n "$before" ] && [ -n "$after" ] && [ "$after" -eq $((before + 1)) ] \
     || { echo "    *** POST did not increment by exactly 1 ***"; fail=1; }
 
+# ---- FRANK'S CROSS-ORIGIN PATH -------------------------------------------
+# footprintsoffrank.com has no Cloudflare zone and cannot host a Worker route,
+# so its button calls this Worker cross-origin. If the CORS header is wrong the
+# browser drops the response and Frank's button NEVER APPEARS -- the block only
+# reveals itself on a successful fetch. That is a silent, invisible failure, so
+# it has to be proven here rather than discovered by looking at Frank's site and
+# seeing nothing, which is also what a correctly-disabled flag looks like.
+# NB: this is only meaningful against the DEPLOYED Worker. `wrangler dev`
+# textually rewrites the routed hostname in outgoing headers (an echoed
+# `https://thebelens.com` returns as `https://127.0.0.1:<port>`), so a local
+# run cannot verify this -- see the note in test-local.sh.
+echo
+echo "  --- Frank's cross-origin access (his button is invisible without it) ---"
+fhdr=$(curl -sS -D - -o /dev/null --max-time 15 -H "Origin: $FOF" \
+       "https://thebelens.com/api/likes/fof/$SLUG" 2>/dev/null | tr -d '\r')
+facao=$(printf '%s' "$fhdr" | grep -i '^access-control-allow-origin:' | head -1 | cut -d' ' -f2- | tr -d ' ')
+fvary=$(printf '%s' "$fhdr" | grep -i '^vary:' | head -1 | cut -d' ' -f2-)
+printf '    allow-origin:     %s\n' "${facao:-ABSENT}"
+printf '    vary:             %s\n' "${fvary:-absent}"
+[ "$facao" = "$FOF" ] || { echo "    *** Frank's origin is not allowed -- his button will not appear ***"; fail=1; }
+
+# A foreign origin must NOT be echoed. Without this the check above passes
+# just as happily against an open "allow anyone" policy.
+ehdr=$(curl -sS -D - -o /dev/null --max-time 15 -H "Origin: https://evil.example" \
+       "https://thebelens.com/api/likes/tb/$SLUG" 2>/dev/null | tr -d '\r')
+if printf '%s' "$ehdr" | grep -qi '^access-control-allow-origin:'; then
+    echo "    *** a foreign origin was echoed -- CORS is open to anyone ***"; fail=1
+else
+    echo "    foreign origin: correctly refused"
+fi
+
 echo
 if [ "$fail" -eq 0 ]; then
-    echo "  OK -- live, uncached, and incrementing."
-    echo "  (the '$SLUG' key is a test artifact; delete it with:"
-    echo "     npx wrangler kv key delete --namespace-id \$LIKES_KV_ID $SLUG )"
+    echo "  OK -- live, uncached, incrementing, and reachable from both sites."
+    echo "  (the 'tb:$SLUG' and 'fof:$SLUG' keys are test artifacts; delete with:"
+    echo "     npx wrangler kv key delete --namespace-id \$LIKES_KV_ID tb:$SLUG"
+    echo "     npx wrangler kv key delete --namespace-id \$LIKES_KV_ID fof:$SLUG )"
 else
     echo "  VERIFICATION FAILED -- the deploy may be up but is not behaving." >&2
     exit 1
