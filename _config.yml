@@ -88,6 +88,12 @@ exclude:
   # files into _site (a 160 MB build) and would have served deploy.sh and
   # the Worker source at thebelens.com/workers/likes/.
   - workers
+  # Build-time tooling, not website content. Same two-exclusion-systems gap as
+  # workers/ above: scripts/ is COMMITTED on purpose (it is how fonts.css is
+  # regenerated) but it is not a page, and without this line Jekyll published it
+  # -- scripts/selfhost-fonts.py answered HTTP 200 on the live site until
+  # 2026-11-10. In git is not the same question as in the build.
+  - scripts
   # Working source material. Underscore dirs are skipped by default;
   # naming it here too makes the intent explicit and survives a rename.
   - _content
